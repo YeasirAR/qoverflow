@@ -1,11 +1,11 @@
-import Contact from '../components/about/Contact'
+import HomePage from '@/components/homepage/homepage'
 export default function Example() {
   return (
     <div>
     <header>
       <title>qOverflow</title>
     </header>
-      <Contact />
+      <HomePage />
     </div>
   )
 }

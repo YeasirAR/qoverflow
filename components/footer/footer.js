@@ -9,8 +9,8 @@ import styles from "@/styles/Home.module.css";
 
 const Footer = () => {
   return (
-    <div className="dark">
-      <footer className="bg-white dark:bg-gray-900">
+    <div className="ligth">
+      <footer className="bg-white dark:bg-gray-900 shadow-lg">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">
@@ -25,7 +25,7 @@ const Footer = () => {
                 />
               </a>
               <div className="self-center text-lg font-semibold whitespace-nowrap  dark:text-zinc-300">
-                problem tmr, matha betha amadr
+                {/* problem tmr, matha betha amadr */}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">

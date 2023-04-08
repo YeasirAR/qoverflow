@@ -1,5 +1,5 @@
 
-const ViewQuestion = () => {
+const ViewQ = () => {
     return (
         <div>
             <h1>View Question</h1>
@@ -7,4 +7,4 @@ const ViewQuestion = () => {
     )
 }
 
-export default ViewQuestion
+export default ViewQ

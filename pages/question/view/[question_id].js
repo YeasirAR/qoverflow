@@ -1,13 +1,14 @@
-import { useRouter } from "next/router"
-
-const ViewQuestion = () => {
-    const router = useRouter()
-    const {question_id} = router.query
-    return (
-        <div>
-            <h1>View Question {question_id}</h1>
-        </div>
-    )
+import { useRouter } from "next/router";
+import ViewQSN from "@/components/question/viewquestion";
+export default function ViewQuestion() {
+  const router = useRouter();
+  const { question_id } = router.query;
+  return (
+    <div>
+      <header>
+        <title>qOverflow</title>
+      </header>
+      <ViewQSN />
+    </div>
+  );
 }
-
-export default ViewQuestion
