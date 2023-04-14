@@ -1,6 +1,4 @@
-const router = useRouter()
-const {question_id} = router.query
-
+import { useRouter } from "next/router";
 const ViewQuestion = () => {
     const router = useRouter()
     const {question_id} = router.query

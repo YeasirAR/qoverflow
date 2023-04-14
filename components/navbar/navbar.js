@@ -1,4 +1,5 @@
 import logo from '../../public/images/logo.png'
+import yeasir_img from '../../public/images/yeasir.jpg'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
@@ -18,8 +19,7 @@ import {
 const user = {
   name: 'Yeasir Arafat',
   email: 'yeasir402@gmail.com',
-  imageUrl:
-    'https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E',
+  imageUrl:'/images/yeasir.jpg',
 }
 const navigation = [
   { name: 'Home', href: '#', icon: HomeIcon, current: true },
@@ -115,7 +115,7 @@ export default function HomePage() {
                       <div>
                         <Menu.Button className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
                           <span className="sr-only">Open user menu</span>
-                          <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                          <Image className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" height={1000} width={1000} />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -176,7 +176,7 @@ export default function HomePage() {
                 <div className="border-t border-gray-200 pt-4">
                   <div className="mx-auto flex max-w-3xl items-center px-4 sm:px-6">
                     <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                      <Image className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" height={1000} width={1000} />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium text-gray-800">{user.name}</div>

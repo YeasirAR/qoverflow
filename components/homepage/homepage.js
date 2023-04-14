@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
+import yeasir_img from '../../public/images/yeasir.jpg'
 import {
   ChatBubbleLeftEllipsisIcon,
   CodeBracketIcon,
@@ -26,11 +27,11 @@ import { BsFillCaretDownFill as Upvote } from "react-icons/bs";
 import { BsFillCaretUpFill as Downvote } from "react-icons/bs";
 
 import { Button } from "@mui/material";
+import Image from "next/image";
 const user = {
   name: "Yeasir Arafat",
   email: "yeasir402@gmail.com",
-  imageUrl:
-    "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+  imageUrl:"/images/yeasir.jpg"
 };
 const navigation = [
   { name: "Home", href: "#", icon: HomeIcon, current: true },
@@ -71,8 +72,7 @@ const questions = [
     views: "2.7k",
     author: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl:"/images/yeasir.jpg",
       href: "#",
     },
     date: "December 9 at 11:43 AM",
@@ -90,8 +90,7 @@ const questions = [
     views: "2.7k",
     author: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl:"/images/yeasir.jpg",
       href: "#",
     },
     date: "December 9 at 11:43 AM",
@@ -109,8 +108,7 @@ const questions = [
     views: "2.7k",
     author: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl: "/images/yeasir.jpg",
       href: "#",
     },
     date: "December 9 at 11:43 AM",
@@ -128,23 +126,17 @@ const whoToFollow = [
     name: "Yeasir Arafat",
     handle: "yeasirar",
     href: "#",
-    imageUrl:
-      "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
-  },
+    imageUrl:"/images/yeasir.jpg"  },
   {
     name: "Yeasir Arafat",
     handle: "yeasirar",
     href: "#",
-    imageUrl:
-      "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
-  },
+    imageUrl:"/images/yeasir.jpg"  },
   {
     name: "Yeasir Arafat",
     handle: "yeasirar",
     href: "#",
-    imageUrl:
-      "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
-  },
+    imageUrl:"/images/yeasir.jpg"  },
   // More people...
 ];
 const trendingPosts = [
@@ -152,8 +144,7 @@ const trendingPosts = [
     id: 1,
     user: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl:"/images/yeasir.jpg"
     },
     body: "How to cleanly make multiple elements movable anywhere?",
     comments: 291,
@@ -162,8 +153,7 @@ const trendingPosts = [
     id: 1,
     user: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl:"/images/yeasir.jpg"
     },
     body: "How to cleanly make multiple elements movable anywhere?",
     comments: 291,
@@ -172,8 +162,7 @@ const trendingPosts = [
     id: 1,
     user: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl: "/images/yeasir.jpg"
     },
     body: "How to cleanly make multiple elements movable anywhere?",
     comments: 291,
@@ -182,8 +171,7 @@ const trendingPosts = [
     id: 1,
     user: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl: "/images/yeasir.jpg"
     },
     body: "How to cleanly make multiple elements movable anywhere?",
     comments: 291,
@@ -192,8 +180,7 @@ const trendingPosts = [
     id: 1,
     user: {
       name: "Yeasir Arafat",
-      imageUrl:
-        "https://scontent.fdac7-1.fna.fbcdn.net/v/t39.30808-6/318844054_2091295284593277_7072698830351565367_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=SzmVf39BPPoAX8V2lP1&_nc_ht=scontent.fdac7-1.fna&oh=00_AfCkksFYmlU3r7u_JYmBymx2qhKMpaQwTG3y281d6GedyQ&oe=6431D64E",
+      imageUrl: "/images/yeasir.jpg"
     },
     body: "How to cleanly make multiple elements movable anywhere?",
     comments: 291,
@@ -209,17 +196,7 @@ function classNames(...classes) {
 export default function HomePage() {
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
       <div className="min-h-full">
-        {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
-
         <div className="py-10">
           <div className="mx-auto max-w-3xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-8 lg:px-8">
             <div className="hidden lg:col-span-3 lg:block xl:col-span-2">
@@ -361,9 +338,10 @@ export default function HomePage() {
                         <div>
                           <div className="flex space-x-3">
                             <div className="flex-shrink-0">
-                              <img
+                              <Image
                                 className="h-10 w-10 rounded-full"
                                 src={question.author.imageUrl}
+                                height={1000} width={1000}
                                 alt=""
                               />
                             </div>
@@ -604,9 +582,10 @@ export default function HomePage() {
                               className="flex items-center space-x-3 py-4"
                             >
                               <div className="flex-shrink-0">
-                                <img
+                                <Image
                                   className="h-8 w-8 rounded-full"
                                   src={user.imageUrl}
+                                  height={1000} width={1000}
                                   alt=""
                                 />
                               </div>
@@ -662,10 +641,11 @@ export default function HomePage() {
                           {trendingPosts.map((post) => (
                             <li key={post.id} className="flex space-x-3 py-4">
                               <div className="flex-shrink-0">
-                                <img
+                                <Image
                                   className="h-8 w-8 rounded-full"
                                   src={post.user.imageUrl}
                                   alt={post.user.name}
+                                  height={1000} width={1000}
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
