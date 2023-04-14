@@ -253,13 +253,13 @@ export default function HomePage() {
                       :
                 <div className="mx-auto mt-6 max-w-3xl px-4 sm:px-6">
                   <Link
-                    href="#"
+                    href="/auth/login"
                     className="flex items-center justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700"
                   >
                     Log in
                   </Link>
                   <Link
-                    href="#"
+                    href="/auth/signup"
                     className="mt-3 flex items-center justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700"
                   >
                     Sign up

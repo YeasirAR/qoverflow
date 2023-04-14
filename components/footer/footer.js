@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Fragment } from "react";
 import styles from "@/styles/Home.module.css";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -14,7 +15,7 @@ const Footer = () => {
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">
-              <a href="#" className="flex items-center">
+              <Link href="#" className="flex items-center">
                 {/* <img src={logo} className="h-8 mr-3" alt="FlowBite Logo" /> */}
                 <Image
                   className="mr-3 mt-5"
@@ -23,7 +24,7 @@ const Footer = () => {
                   src={logo}
                   placeholder="blur"
                 />
-              </a>
+              </Link>
               <div className="self-center text-lg font-semibold whitespace-nowrap  dark:text-zinc-300">
                 {/* problem tmr, matha betha amadr */}
               </div>
@@ -35,17 +36,17 @@ const Footer = () => {
                 </h2>
                 <ul className="text-gray-600 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <a href="https://flowbite.com/" className="hover:underline">
+                    <Link href="#" className="hover:underline">
                       Learn Programming
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="https://tailwindcss.com/"
+                    <Link
+                      href="#"
                       className="hover:underline"
                     >
                       Machine Learning
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -55,20 +56,20 @@ const Footer = () => {
                 </h2>
                 <ul className="text-gray-600 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <a
-                      href="https://github.com/themesberg/flowbite"
+                    <Link
+                      href="https://github.com/yeasirar"
                       className="hover:underline "
                     >
                       Github
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="https://discord.gg/4eeurUVvTy"
+                    <Link
+                      href="#"
                       className="hover:underline"
                     >
                       Discord
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -78,14 +79,14 @@ const Footer = () => {
                 </h2>
                 <ul className="text-gray-600 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <a href="#" className="hover:underline">
+                    <Link href="#" className="hover:underline">
                       Privacy Policy
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <Link href="#" className="hover:underline">
                       Terms &amp; Conditions
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -95,14 +96,14 @@ const Footer = () => {
           <div className="sm:flex sm:items-center sm:justify-between">
             <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
               © 2023{" "}
-              <a href="https://flowbite.com/" className="hover:underline">
+              <Link href="/" className="hover:underline">
                 qOverflow™
-              </a>
+              </Link>
               . All Rights Reserved.
             </span>
             <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
-              <a
-                href="#"
+              <Link
+                href="https://facebook.com/yeasir.offical"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
               >
                 <svg
@@ -118,8 +119,8 @@ const Footer = () => {
                   />
                 </svg>
                 <span className="sr-only">Facebook page</span>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
               >
@@ -136,8 +137,8 @@ const Footer = () => {
                   />
                 </svg>
                 <span className="sr-only">Instagram page</span>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
               >
@@ -150,9 +151,9 @@ const Footer = () => {
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
                 <span className="sr-only">Twitter page</span>
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href="https://github.com/yeasirar"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
               >
                 <svg
@@ -168,8 +169,8 @@ const Footer = () => {
                   />
                 </svg>
                 <span className="sr-only">GitHub account</span>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
               >
@@ -186,7 +187,7 @@ const Footer = () => {
                   />
                 </svg>
                 <span className="sr-only">Dribbble account</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
