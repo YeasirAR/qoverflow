@@ -15,6 +15,7 @@ import {
   InformationCircleIcon,
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const user = {
   name: "Yeasir Arafat",
@@ -60,13 +61,13 @@ export default function HomePage() {
                 <div className="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
                   <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
                     <div className="flex flex-shrink-0 items-center">
-                      <a href="/">
+                      <Link href="/">
                         <Image
                           className="block h-8 w-auto"
                           src={logo}
                           alt="qoverflow"
                         />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
@@ -112,16 +113,16 @@ export default function HomePage() {
                   </div>
                   {isLoggedIn ? (
                     <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                      {/* <a href="#" className="text-sm font-medium text-gray-900 hover:underline">
+                      {/* <Link href="#" className="text-sm font-medium text-gray-900 hover:underline">
                       Go Premium
-                    </a> */}
-                      <a
+                    </Link> */}
+                      <Link
                         href="#"
                         className="ml-5 flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
                       >
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
-                      </a>
+                      </Link>
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-5 flex-shrink-0">
@@ -150,7 +151,7 @@ export default function HomePage() {
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
-                                  <a
+                                  <Link
                                     href={item.href}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
@@ -158,7 +159,7 @@ export default function HomePage() {
                                     )}
                                   >
                                     {item.name}
-                                  </a>
+                                  </Link>
                                 )}
                               </Menu.Item>
                             ))}
@@ -166,27 +167,27 @@ export default function HomePage() {
                         </Transition>
                       </Menu>
 
-                      <a
+                      <Link
                         href="#"
                         className="ml-6 inline-flex items-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
                       >
                         Ask Question
-                      </a>
+                      </Link>
                     </div>
                   ) : (
                     <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                      <a
+                      <Link 
                         href="/auth/login"
                         className="ml-6 inline-flex items-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
                       >
                         Log in
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         href="/auth/signup"
                         className="ml-6 inline-flex items-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
                       >
                         Sign up
-                      </a>
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -195,7 +196,7 @@ export default function HomePage() {
               <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
                 <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
                       aria-current={item.current ? "page" : undefined}
@@ -207,7 +208,7 @@ export default function HomePage() {
                       )}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
                 {isLoggedIn?<div className="border-t border-gray-200 pt-4">
@@ -239,30 +240,30 @@ export default function HomePage() {
                   </div>
                   <div className="mx-auto mt-3 max-w-3xl space-y-1 px-2 sm:px-4">
                     {userNavigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
                       :
                 <div className="mx-auto mt-6 max-w-3xl px-4 sm:px-6">
-                  <a
+                  <Link
                     href="#"
                     className="flex items-center justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700"
                   >
                     Log in
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="#"
                     className="mt-3 flex items-center justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700"
                   >
                     Sign up
-                  </a>
+                  </Link>
                 </div>}
               </Popover.Panel>
             </>
