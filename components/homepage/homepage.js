@@ -21,6 +21,8 @@ import {
   HomeIcon,
   UserGroupIcon,
   XMarkIcon,
+  InformationCircleIcon,
+  ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
 
 import { BsFillCaretDownFill as Upvote } from "react-icons/bs";
@@ -38,6 +40,8 @@ const navigation = [
   { name: "Questions", href: "#", icon: FireIcon, current: false },
   { name: "Tags", href: "#", icon: ArrowTrendingUpIcon, current: false },
   { name: "Users", href: "#", icon: UserGroupIcon, current: false },
+  { name: "About", href: "/about", icon: InformationCircleIcon, current: false },
+  { name: "Contact", href: "/contact", icon: ChatBubbleBottomCenterTextIcon, current: false },
 ];
 const userNavigation = [
   { name: "Your Profile", href: "#" },
