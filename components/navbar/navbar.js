@@ -41,7 +41,7 @@ function classNames(...classes) {
 }
 
 export default function HomePage() {
-  var isLoggedIn = false;
+  var isLoggedIn = true;
   return (
     <>
       <div className="min-h-full">
@@ -168,7 +168,7 @@ export default function HomePage() {
                       </Menu>
 
                       <Link
-                        href="#"
+                        href="/question/ask"
                         className="ml-6 inline-flex items-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
                       >
                         Ask Question
