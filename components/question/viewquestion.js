@@ -501,8 +501,10 @@ export default function ViewQuestion() {
     <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
         <footer class="flex justify-between items-center mb-2">
             <div class="flex items-center">
-                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
-                        class="mr-2 w-6 h-6 rounded-full"
+                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><Image
+                        className="mr-2 w-6 h-6 rounded-full"
+                        width={100}
+                        height={100}
                         src="/images/yeasir.jpg"
                         alt="Michael Gough"/>Michael Gough</p>
                 <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"
@@ -552,8 +554,10 @@ export default function ViewQuestion() {
     <article class="p-6 mb-6 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900">
         <footer class="flex justify-between items-center mb-2">
             <div class="flex items-center">
-                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
+                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><Image
                         class="mr-2 w-6 h-6 rounded-full"
+                        width={100}
+                        height={100}
                         src="/images/yeasir.jpg"
                         alt="Jese Leos"/>Jese Leos</p>
                 <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-12"
@@ -601,8 +605,10 @@ export default function ViewQuestion() {
     <article class="p-6 mb-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
         <footer class="flex justify-between items-center mb-2">
             <div class="flex items-center">
-                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
+                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><Image
                         class="mr-2 w-6 h-6 rounded-full"
+                        width={100}
+                        height={100}
                         src="/images/yeasir.jpg"
                         alt="Bonnie Green"/>Bonnie Green</p>
                 <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-03-12"
@@ -650,8 +656,10 @@ export default function ViewQuestion() {
     <article class="p-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
         <footer class="flex justify-between items-center mb-2">
             <div class="flex items-center">
-                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
+                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><Image
                         class="mr-2 w-6 h-6 rounded-full"
+                        width={100}
+                        height={100}
                         src="/images/yeasir.jpg"
                         alt="Helene Engels"/>Helene Engels</p>
                 <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-06-23"

@@ -1,7 +1,7 @@
 const Editor = () => {
   return(
     <>
-      <>I'm Rich TEXT EDITOR</>
+      <><h1>Im Rich TEXT EDITOR</h1></>
     </>
   )
 }
