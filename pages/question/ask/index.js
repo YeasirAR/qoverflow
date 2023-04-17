@@ -296,26 +296,17 @@ export default function AskQuestion() {
               </nav>
             </div>
             <main className="lg:col-span-12 xl:col-span-10">
-              <div className="mt-4">
+              <div className="mt-0">
                 <ul role="list" className="space-y-4">
                   {/* <li className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
                     <h1 className="text-3xl">Ask a public question</h1>
                   </li> */}
                   <li className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
                     <div>
-                      <h1 className="text-3xl text-center font-bold">
+                      <h1 className="mb-1 text-3xl font-bold">
                         Ask a public question
                       </h1>
-                      <h1 className="text-xl mb-1">
-                        Writing a good question <br></br>
-                      </h1>
-                      <article className="mb- just">
-                        You’re ready to ask a programming-related question and
-                        this form will help guide you through the process.
-                        Looking to ask a non-programming question? See the
-                        topics here to find a relevant site.<br></br>
-                      </article>
-                      <h2 className="text-xl ">Steps</h2>
+                      <h2 className="text-xl ">Steps of writing a good question</h2>
                       <ul className="list-disc ml-8">
                         <li>Summarize your problem in a one-line title.</li>
                         <li>Describe your problem in more detail.</li>
