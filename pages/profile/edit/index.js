@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
-import ViewProfile from "../../components/profile/profile_view";
+import EditProfile from "../../../components/profile/profile_edit";
 import {
   ChatBubbleLeftEllipsisIcon,
   CodeBracketIcon,
@@ -212,7 +212,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ViewProfilePage() {
+export default function EditProfilePage() {
   return (
     <>
       <div className="min-h-full">
@@ -296,7 +296,7 @@ export default function ViewProfilePage() {
               </nav>
             </div>
             <main className="lg:col-span-12 xl:col-span-10">
-            <ViewProfile/>
+            <EditProfile/>
             </main>
           </div>
         </div>

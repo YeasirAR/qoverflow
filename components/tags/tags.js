@@ -117,7 +117,7 @@ export default function Tags() {
             id="search"
             name="search"
             className="block w-40 sm:w-80 rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-rose-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-rose-500 sm:text-sm"
-            placeholder="Filter by user"
+            placeholder="Filter by tag name"
             type="search"
           />
         </div>
