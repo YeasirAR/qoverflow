@@ -39,8 +39,8 @@ const user = {
 const navigation = [
   { name: "Home", href: "#", icon: HomeIcon, current: true },
   { name: "Questions", href: "#", icon: FireIcon, current: false },
-  { name: "Tags", href: "#", icon: ArrowTrendingUpIcon, current: false },
-  { name: "Users", href: "#", icon: UserGroupIcon, current: false },
+  { name: "Tags", href: "/tags", icon: ArrowTrendingUpIcon, current: false },
+  { name: "Users", href: "/users", icon: UserGroupIcon, current: false },
   {
     name: "About",
     href: "/about",
@@ -212,7 +212,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function AskQuestion() {
+export default function UsersPage() {
   return (
     <>
       <div className="min-h-full">
