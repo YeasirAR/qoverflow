@@ -287,7 +287,7 @@ export default function HomePage() {
                 </div>
               </nav>
             </div>
-            <main className="lg:col-span-9 xl:col-span-6">
+            <main className="lg:col-span-9 xl:col-span-7">
               <div className="px-4 sm:px-0">
                 <div className="sm:hidden">
                   <label htmlFor="question-tabs" className="sr-only">
@@ -419,11 +419,11 @@ export default function HomePage() {
                                               className="mr-3 h-5 w-5 text-gray-400"
                                               aria-hidden="true"
                                             />
-                                            <span>Add to favorites</span>
+                                            <span>Save</span>
                                           </a>
                                         )}
                                       </Menu.Item>
-                                      <Menu.Item>
+                                      {/* <Menu.Item>
                                         {({ active }) => (
                                           <a
                                             href="#"
@@ -441,7 +441,7 @@ export default function HomePage() {
                                             <span>Embed</span>
                                           </a>
                                         )}
-                                      </Menu.Item>
+                                      </Menu.Item> */}
                                       <Menu.Item>
                                         {({ active }) => (
                                           <a
@@ -457,7 +457,7 @@ export default function HomePage() {
                                               className="mr-3 h-5 w-5 text-gray-400"
                                               aria-hidden="true"
                                             />
-                                            <span>Report content</span>
+                                            <span>Report</span>
                                           </a>
                                         )}
                                       </Menu.Item>
@@ -654,7 +654,7 @@ export default function HomePage() {
       </div>
     </div>
             </main>
-            <aside className="hidden xl:col-span-4 xl:block">
+            <aside className="hidden xl:col-span-3 xl:block">
               <div className="sticky top-4 space-y-4">
                 <section aria-labelledby="who-to-follow-heading">
                   <div className="rounded-lg bg-white shadow">
