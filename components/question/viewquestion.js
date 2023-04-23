@@ -32,6 +32,7 @@ import { BsFillCaretUpFill as Upvote } from "react-icons/bs";
 
 import { Button } from "@mui/material";
 import Image from "next/image";
+import Editor from "../editor/editor";
 const user = {
   name: "Yeasir Arafat",
   email: "yeasir402@gmail.com",
@@ -42,22 +43,8 @@ const comments = [
     id: 1,
     name: "Leslie Alexander",
     date: "4d ago",
-    imageId: "1494790108377-be9c29b29330",
+    imageUrl: "/images/anna.jpeg",
     body: "Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.",
-  },
-  {
-    id: 2,
-    name: "Michael Foster",
-    date: "4d ago",
-    imageId: "1519244703995-f4e0f30006d5",
-    body: "Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.",
-  },
-  {
-    id: 3,
-    name: "Dries Vincent",
-    date: "4d ago",
-    imageId: "1506794778202-cad84cf45f1d",
-    body: "Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.",
   },
 ];
 const navigation = [
@@ -78,11 +65,6 @@ const navigation = [
     current: false,
   },
 ];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
 const communities = [
   { name: "React", href: "#" },
   { name: "Flutter", href: "#" },
@@ -97,12 +79,6 @@ const quicklinks = [
   { name: "Install Node", href: "#" },
   { name: "Setup Project", href: "#" },
 ];
-const tabs = [
-  { name: "Recent", href: "#", current: true },
-  { name: "Most Viewed", href: "#", current: false },
-  { name: "Most Answers", href: "#", current: false },
-];
-
 const questions = [
   {
     id: "81614",
@@ -122,7 +98,45 @@ const questions = [
       <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
     `,
   },
-  // More questions...
+];
+
+const answers = [
+  {
+    id: "81614",
+    likes: "29",
+    replies: "11",
+    views: "2.7k",
+    author: {
+      name: "Yeasir Arafat",
+      imageUrl: "/images/yeasir.jpg",
+      href: "#",
+    },
+    date: "December 9 at 11:43 AM",
+    datetime: "2020-12-09T11:43:00",
+    href: "#",
+    title: "How to cleanly make multiple elements movable anywhere?",
+    body: `
+      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
+    `,
+  },
+  {
+    id: "81614",
+    likes: "29",
+    replies: "11",
+    views: "2.7k",
+    author: {
+      name: "Yeasir Arafat",
+      imageUrl: "/images/yeasir.jpg",
+      href: "#",
+    },
+    date: "December 9 at 11:43 AM",
+    datetime: "2020-12-09T11:43:00",
+    href: "#",
+    title: "How to cleanly make multiple elements movable anywhere?",
+    body: `
+      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
+    `,
+  },
 ];
 const whoToFollow = [
   {
@@ -496,9 +510,11 @@ export default function ViewQuestion() {
                             <li key={comment.id}>
                               <div className="flex space-x-3">
                                 <div className="flex-shrink-0">
-                                  <img
+                                  <Image
+                                    height={100}
+                                    width={100}
                                     className="h-10 w-10 rounded-full"
-                                    src={`https://images.unsplash.com/photo-${comment.imageId}?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80`}
+                                    src={comment.imageUrl}
                                     alt=""
                                   />
                                 </div>
@@ -538,7 +554,9 @@ export default function ViewQuestion() {
                     <div className="bg-gray-50 px-4 py-6 sm:px-6">
                       <div className="flex space-x-3">
                         <div className="flex-shrink-0">
-                          <img
+                          <Image
+                            height={100}
+                            width={100}
                             className="h-10 w-10 rounded-full"
                             src={user.imageUrl}
                             alt=""
@@ -591,98 +609,98 @@ export default function ViewQuestion() {
                       id="notes-title"
                       className="text-lg font-medium text-gray-900"
                     >
-                      {"1 "}Answers
+                      {answers.length+" "}Answers
                     </h2>
                   </div>
-                      {/* <h1 className="sr-only">Recent questions</h1> */}
-                      <ul role="list" className="space-y-4">
-                        {questions.map((question) => (
-                          <li
-                            key={question.id}
-                            className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6"
-                          >
-                            <article
-                              aria-labelledby={"question-title-" + question.id}
-                            >
-                              <div>
-                                <div className="flex space-x-3">
-                                  <div className="flex-shrink-0">
-                                    <Image
-                                      className="h-10 w-10 rounded-full"
-                                      src={question.author.imageUrl}
-                                      height={1000}
-                                      width={1000}
-                                      alt=""
-                                    />
+                  {/* <h1 className="sr-only">Recent questions</h1> */}
+                  <ul role="list" className="space-y-2">
+                    {answers.map((answer) => (
+                      <li
+                        key={answer.id}
+                        className="bg-white px-4 shadow  sm:p-6"
+                      >
+                        <article
+                          aria-labelledby={"answer-title-" + answer.id}
+                        >
+                          <div>
+                            <div className="flex space-x-3">
+                              <div className="flex-shrink-0">
+                                <Image
+                                  className="h-10 w-10 rounded-full"
+                                  src={answer.author.imageUrl}
+                                  height={1000}
+                                  width={1000}
+                                  alt=""
+                                />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="text-sm font-medium text-gray-900">
+                                  <a
+                                    href={answer.author.href}
+                                    className="hover:underline"
+                                  >
+                                    {answer.author.name}
+                                  </a>
+                                </p>
+                                <p className="text-sm text-gray-500">
+                                  <a
+                                    href={answer.href}
+                                    className="hover:underline"
+                                  >
+                                    <time dateTime={answer.datetime}>
+                                      {answer.date}
+                                    </time>
+                                  </a>
+                                </p>
+                              </div>
+                              <div className="flex flex-shrink-0 self-center">
+                                <Menu
+                                  as="div"
+                                  className="relative inline-block text-left"
+                                >
+                                  <div>
+                                    <Menu.Button className="-m-2 flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600">
+                                      <span className="sr-only">
+                                        Open options
+                                      </span>
+                                      <EllipsisVerticalIcon
+                                        className="h-5 w-5"
+                                        aria-hidden="true"
+                                      />
+                                    </Menu.Button>
                                   </div>
-                                  <div className="min-w-0 flex-1">
-                                    <p className="text-sm font-medium text-gray-900">
-                                      <a
-                                        href={question.author.href}
-                                        className="hover:underline"
-                                      >
-                                        {question.author.name}
-                                      </a>
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                      <a
-                                        href={question.href}
-                                        className="hover:underline"
-                                      >
-                                        <time dateTime={question.datetime}>
-                                          {question.date}
-                                        </time>
-                                      </a>
-                                    </p>
-                                  </div>  
-                                  <div className="flex flex-shrink-0 self-center">
-                                    <Menu
-                                      as="div"
-                                      className="relative inline-block text-left"
-                                    >
-                                      <div>
-                                        <Menu.Button className="-m-2 flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600">
-                                          <span className="sr-only">
-                                            Open options
-                                          </span>
-                                          <EllipsisVerticalIcon
-                                            className="h-5 w-5"
-                                            aria-hidden="true"
-                                          />
-                                        </Menu.Button>
-                                      </div>
 
-                                      <Transition
-                                        as={Fragment}
-                                        enter="transition ease-out duration-100"
-                                        enterFrom="transform opacity-0 scale-95"
-                                        enterTo="transform opacity-100 scale-100"
-                                        leave="transition ease-in duration-75"
-                                        leaveFrom="transform opacity-100 scale-100"
-                                        leaveTo="transform opacity-0 scale-95"
-                                      >
-                                        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                          <div className="py-1">
-                                            <Menu.Item>
-                                              {({ active }) => (
-                                                <a
-                                                  href="#"
-                                                  className={classNames(
-                                                    active
-                                                      ? "bg-gray-100 text-gray-900"
-                                                      : "text-gray-700",
-                                                    "flex px-4 py-2 text-sm"
-                                                  )}
-                                                >
-                                                  <StarIcon
-                                                    className="mr-3 h-5 w-5 text-gray-400"
-                                                    aria-hidden="true"
-                                                  />
-                                                  <span>Save</span>
-                                                </a>
+                                  <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95"
+                                  >
+                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                      <div className="py-1">
+                                        <Menu.Item>
+                                          {({ active }) => (
+                                            <a
+                                              href="#"
+                                              className={classNames(
+                                                active
+                                                  ? "bg-gray-100 text-gray-900"
+                                                  : "text-gray-700",
+                                                "flex px-4 py-2 text-sm"
                                               )}
-                                            </Menu.Item>
-                                            {/* <Menu.Item>
+                                            >
+                                              <StarIcon
+                                                className="mr-3 h-5 w-5 text-gray-400"
+                                                aria-hidden="true"
+                                              />
+                                              <span>Save</span>
+                                            </a>
+                                          )}
+                                        </Menu.Item>
+                                        {/* <Menu.Item>
                                         {({ active }) => (
                                           <a
                                             href="#"
@@ -701,68 +719,74 @@ export default function ViewQuestion() {
                                           </a>
                                         )}
                                       </Menu.Item> */}
-                                            <Menu.Item>
-                                              {({ active }) => (
-                                                <a
-                                                  href="#"
-                                                  className={classNames(
-                                                    active
-                                                      ? "bg-gray-100 text-gray-900"
-                                                      : "text-gray-700",
-                                                    "flex px-4 py-2 text-sm"
-                                                  )}
-                                                >
-                                                  <FlagIcon
-                                                    className="mr-3 h-5 w-5 text-gray-400"
-                                                    aria-hidden="true"
-                                                  />
-                                                  <span>Report</span>
-                                                </a>
+                                        <Menu.Item>
+                                          {({ active }) => (
+                                            <a
+                                              href="#"
+                                              className={classNames(
+                                                active
+                                                  ? "bg-gray-100 text-gray-900"
+                                                  : "text-gray-700",
+                                                "flex px-4 py-2 text-sm"
                                               )}
-                                            </Menu.Item>
-                                          </div>
-                                        </Menu.Items>
-                                      </Transition>
-                                    </Menu>
-                                  </div>
-                                </div>
-                                <div className="grid grid-cols-12">
-                                  <div className="col-span-1 text-gray-400">
-                                    <Upvote
-                                      className="h-9 w-9 mt-2 hover:text-gray-500"
-                                      aria-hidden="true"
-                                    />
-                                    <h1 className="font-medium text-lg text-gray-900 ml-2">
-                                      20
-                                    </h1>
-                                    <Downvote
-                                      className="h-9 w-9 hover:text-gray-500"
-                                      aria-hidden="true"
-                                    />
-                                    {/* <SaveRoundedIcon
+                                            >
+                                              <FlagIcon
+                                                className="mr-3 h-5 w-5 text-gray-400"
+                                                aria-hidden="true"
+                                              />
+                                              <span>Report</span>
+                                            </a>
+                                          )}
+                                        </Menu.Item>
+                                      </div>
+                                    </Menu.Items>
+                                  </Transition>
+                                </Menu>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-12">
+                              <div className="col-span-1 text-gray-400">
+                                <Upvote
+                                  className="h-9 w-9 mt-2 hover:text-gray-500"
+                                  aria-hidden="true"
+                                />
+                                <h1 className="font-medium text-lg text-gray-900 ml-2">
+                                  20
+                                </h1>
+                                <Downvote
+                                  className="h-9 w-9 hover:text-gray-500"
+                                  aria-hidden="true"
+                                />
+                                {/* <SaveRoundedIcon
                                 className="h-6 w-6 hover:text-gray-500"
                                 aria-hidden="true"
                               /> */}
-                                  </div>
-                                  <div className="col-span-11">
-                                    <div>
-                                    </div>
-                                    <div
-                                      className="mt-2 space-y-4 text-base text-gray-700 text-justify"
-                                      dangerouslySetInnerHTML={{
-                                        __html: question.body,
-                                      }}
-                                    />
-
-                                  </div>
-                                </div>
                               </div>
-                            </article>
-                          </li>
-                        ))}
-                      </ul>
-
-
+                              <div className="col-span-11">
+                                <div></div>
+                                <div
+                                  className="mt-2 space-y-4 text-base text-gray-700 text-justify"
+                                  dangerouslySetInnerHTML={{
+                                    __html: answer.body,
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+                      </li>
+                    ))}
+                    <div className="bg-white px-4 shadow  sm:p-6">
+                      <h1 className="text-xl font-medium text-gray-700">
+                        {" "}
+                        Your Answer
+                      </h1>
+                      <Editor />
+                      <Button variant="outlined" size="medium" className="mt-1" >
+                        Post Your Answer
+                      </Button>
+                    </div>
+                  </ul>
                 </div>
               </div>
             </main>
