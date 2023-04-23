@@ -43,7 +43,7 @@ function classNames(...classes) {
 
 export default function HomePage() {
   var isLoggedIn = true;
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   function showNotificationDialog() {
     setOpen(true)
   }
