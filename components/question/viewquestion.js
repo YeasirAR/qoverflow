@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import yeasir_img from "../../public/images/yeasir.jpg";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
@@ -214,6 +214,12 @@ function classNames(...classes) {
 }
 
 export default function ViewQuestion() {
+  const [editorLoaded, setEditorLoaded] = useState(false);
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    setEditorLoaded(true);
+  }, []);
   return (
     <>
       <div className="min-h-full">
@@ -609,7 +615,7 @@ export default function ViewQuestion() {
                       id="notes-title"
                       className="text-lg font-medium text-gray-900"
                     >
-                      {answers.length+" "}Answers
+                      {answers.length + " "}Answers
                     </h2>
                   </div>
                   {/* <h1 className="sr-only">Recent questions</h1> */}
@@ -619,9 +625,7 @@ export default function ViewQuestion() {
                         key={answer.id}
                         className="bg-white px-4 shadow  sm:p-6"
                       >
-                        <article
-                          aria-labelledby={"answer-title-" + answer.id}
-                        >
+                        <article aria-labelledby={"answer-title-" + answer.id}>
                           <div>
                             <div className="flex space-x-3">
                               <div className="flex-shrink-0">
@@ -777,12 +781,20 @@ export default function ViewQuestion() {
                       </li>
                     ))}
                     <div className="bg-white px-4 shadow  sm:p-6">
-                      <h1 className="text-xl font-medium text-gray-700">
+                      <h1 className="mb-2 text-2xl font-medium text-gray-700">
                         {" "}
-                        Your Answer
+                        Add Your Answer Here
                       </h1>
-                      <Editor />
-                      <Button variant="outlined" size="medium" className="mt-1" >
+                      <Editor
+                        name="description"
+                        onChange={(data) => {
+                          setData(data);
+                        }}
+                        editorLoaded={editorLoaded}
+                      />
+
+                      {/* {JSON.stringify(data)} */}
+                      <Button variant="outlined" size="medium" className="mt-2">
                         Post Your Answer
                       </Button>
                     </div>

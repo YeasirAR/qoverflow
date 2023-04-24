@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import Editor from "../../../components/editor/editor";
 import {
@@ -213,6 +213,17 @@ function classNames(...classes) {
 }
 
 export default function AskQuestion() {
+  const [editorLoadedQsn, setEditorQsnLoaded] = useState(false);
+  const [editorLoadedExp, setEditorExpLoaded] = useState(false);
+  const [dataQsn, setDataQsn] = useState("");
+  const [dataExp, setDataExp] = useState("");
+
+  useEffect(() => {
+    setEditorQsnLoaded(true);
+  }, []);
+  useEffect(() => {
+    setEditorExpLoaded(true);
+  }, []);
   return (
     <>
       <div className="min-h-full">
@@ -306,7 +317,9 @@ export default function AskQuestion() {
                       <h1 className="mb-1 text-3xl font-bold">
                         Ask a public question
                       </h1>
-                      <h2 className="text-xl ">Steps of writing a good question</h2>
+                      <h2 className="text-xl ">
+                        Steps of writing a good question
+                      </h2>
                       <ul className="list-disc ml-8">
                         <li>Summarize your problem in a one-line title.</li>
                         <li>Describe your problem in more detail.</li>
@@ -364,7 +377,15 @@ export default function AskQuestion() {
                       title. Minimum 20 characters.
                     </p>
 
-                    <Editor />
+                    <Editor
+                      name="description"
+                      onChange={(dataQsn) => {
+                        setDataQsn(dataQsn);
+                      }}
+                      editorLoaded={editorLoadedQsn}
+                    />
+
+                    {/* {JSON.stringify(dataQsn)} */}
                   </li>
                   <li className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
                     <label
@@ -381,7 +402,15 @@ export default function AskQuestion() {
                       what actually resulted. Minimum 20 characters.
                     </p>
 
-                    <Editor />
+                    <Editor
+                      name="description"
+                      onChange={(dataExp) => {
+                        setDataExp(dataExp);
+                      }}
+                      editorLoaded={editorLoadedExp}
+                    />
+
+                    {/* {JSON.stringify(dataExp)} */}
                   </li>
                   <li className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
                     <div>
@@ -411,7 +440,7 @@ export default function AskQuestion() {
                     </div>
                   </li>
                   <li className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
-                  <button
+                    <button
                       type="button"
                       className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
