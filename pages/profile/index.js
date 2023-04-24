@@ -295,7 +295,7 @@ export default function ViewProfilePage() {
                 </div>
               </nav>
             </div>
-            <main className="lg:col-span-12 xl:col-span-10">
+            <main className="lg:col-span-12 xl:col-span-10 border-l">
             <ViewProfile/>
             </main>
           </div>
