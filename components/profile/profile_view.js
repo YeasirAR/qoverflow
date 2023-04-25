@@ -1,25 +1,278 @@
 import { Button } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CakeIcon from "@mui/icons-material/Cake";
 import Link from "next/link";
+import { Settings } from "@mui/icons-material";
+import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
-const tabs = [
-  { name: "Profile", href: "#", current: true },
-  { name: "Activity", href: "#", current: false },
-  { name: "Saves", href: "#", current: false },
-  { name: "Settings", href: "#", current: false },
-];
+// const tabs = [
+//   { name: "Profile", href: "#", current: true },
+//   { name: "Activity", href: "#", current: false },
+//   { name: "Saves", href: "#", current: false },
+//   { name: "Settings", href: "#", current: false },
+// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+const ProfileInfo = () => {
+  return (
+    <div className="flex p-4">
+      <div>
+        <h1 className="text-2xl mb-2">Stats</h1>
+        <div className="border rounded px-4 py-2 mt-4">
+          <div className="flex space-x-10">
+            <div>
+              <h1 className="text-center font-medium">1</h1>
+              <h3>reputation</h3>
+            </div>
+            <div>
+              <h1 className="text-center font-medium">1</h1>
+              <h3>reached</h3>
+            </div>
+          </div>
+          <div className="flex space-x-10 mt-4">
+            <div>
+              <h1 className="text-center font-medium">1</h1>
+              <h3>questions</h3>
+            </div>
+            <div>
+              <h1 className="text-center font-medium">1</h1>
+              <h3>answers</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="ml-10">
+        <h1 className="text-2xl mb-2">About</h1>
+        <h3>
+          Hello there! My name is Yeasir Arafat and I am a Computer Science and
+          Engineering student currently in my 10th trimester at United
+          International University in Dhaka, Bangladesh. I have always had a
+          passion for technology and programming, and I am excited to be
+          pursuing my education in this field. I am proficient in several
+          programming languages, including C++, Java, JavaScript, Python, and
+          Dart. I have a keen interest in machine learning, mobile development,
+          and data structures, and I enjoy participating in competitive
+          programming challenges in my free time. I am excited to continue
+          learning and growing as a programmer as I pursue my career in the tech
+          industry.
+        </h3>
+      </div>
+    </div>
+  );
+};
+
+function ProfileEdit() {
+  const [displayName, setDisplayName] = useState("");
+  const [location, setLocation] = useState("");
+  const [title, setTitle] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [new_password, setNew_password] = useState("");
+  const [about, setAbout] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [github, setGithub] = useState("");
+  const [profilePic, setProfilePic] = useState(null);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // handle form submission
+  };
+
+  return (
+    <div className="container mx-auto px-4 m-6">
+      <h2 className="text-xl font-bold mb-4">Edit Your Profile</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-6">
+          <label
+            htmlFor="displayName"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Display Name
+          </label>
+          <input
+            required
+            type="text"
+            id="displayName"
+            value={displayName}
+            onChange={(event) => setDisplayName(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="location"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Location
+          </label>
+          <input
+            required
+            type="text"
+            id="location"
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
+            Title
+          </label>
+          <input
+            required
+            type="text"
+            id="title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="about" className="block text-gray-700 font-bold mb-2">
+            About
+          </label>
+          <textarea
+            required
+            id="about"
+            rows={3}
+            value={about}
+            onChange={(event) => setAbout(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          ></textarea>
+        </div>
+        <div className="flex place-content-between">
+          <div className="mb-6">
+            <label htmlFor="facebook" className=" text-gray-700 font-bold mb-2">
+              Facebook
+            </label>
+            <input
+              type="text"
+              id="facebook"
+              value={facebook}
+              onChange={(event) => setFacebook(event.target.value)}
+              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="twitter" className=" text-gray-700 font-bold mb-2">
+              Twitter
+            </label>
+            <input
+              type="text"
+              id="twitter"
+              value={twitter}
+              onChange={(event) => setTwitter(event.target.value)}
+              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="github" className="text-gray-700 font-bold mb-2">
+              GitHub
+            </label>
+            <input
+              type="text"
+              id="github"
+              value={github}
+              onChange={(event) => setGithub(event.target.value)}
+              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="profilePic"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Profile Picture
+          </label>
+          <input
+            type="file"
+            id="profilePic"
+            onChange={(event) => setProfilePic(event.target.files[0])}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="password"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Current Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="new_password"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            New Password
+          </label>
+          <input
+            type="password"
+            id="new_password"
+            value={new_password}
+            onChange={(event) => setNew_password(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  );
+}
+
 export default function ViewProfile() {
+  const [tabs, setTabs] = useState([
+    { name: "Profile", href: "#", current: true },
+    { name: "Activity", href: "#", current: false },
+    { name: "Saves", href: "#", current: false },
+    { name: "Settings", href: "#", current: false },
+  ]);
+
+  const handleTabClick = (index) => {
+    const newTabs = tabs.map((tab, i) => {
+      if (i === index) {
+        return { ...tab, current: true };
+      } else {
+        return { ...tab, current: false };
+      }
+    });
+    setTabs(newTabs);
+  };
   return (
     <div>
       <div className="flex border-b justify-between ">
@@ -104,6 +357,7 @@ export default function ViewProfile() {
         <div className="p-4 flex-shrink-0 ml-auto">
           <button
             type="button"
+            onClick={() => handleTabClick(3)}
             className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Edit Profile
@@ -113,10 +367,11 @@ export default function ViewProfile() {
       <div className="mt-3 pl-4">
         <div className="sm:block">
           <nav className="flex space-x-4" aria-label="Tabs">
-            {tabs.map((tab) => (
-              <a
+            {tabs.map((tab,index) => (
+              <button
                 key={tab.name}
-                href={tab.href}
+                // href={tab.href}
+                onClick={() => handleTabClick(index)}
                 className={classNames(
                   tab.current
                     ? "bg-indigo-100 text-indigo-700"
@@ -126,54 +381,13 @@ export default function ViewProfile() {
                 aria-current={tab.current ? "page" : undefined}
               >
                 {tab.name}
-              </a>
+              </button>
             ))}
           </nav>
         </div>
       </div>
-      <div className="flex p-4">
-        <div>
-          <h1 className="text-2xl mb-2">Stats</h1>
-          <div className="border rounded px-4 py-2 mt-4">
-            <div className="flex space-x-10">
-              <div>
-                <h1 className="text-center font-medium">1</h1>
-                <h3>reputation</h3>
-              </div>
-              <div>
-                <h1 className="text-center font-medium">1</h1>
-                <h3>reached</h3>
-              </div>
-            </div>
-            <div className="flex space-x-10 mt-4">
-              <div>
-                <h1 className="text-center font-medium">1</h1>
-                <h3>questions</h3>
-              </div>
-              <div>
-                <h1 className="text-center font-medium">1</h1>
-                <h3>answers</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="ml-10">
-          <h1 className="text-2xl mb-2">About</h1>
-          <h3>
-            Hello there! My name is Yeasir Arafat and I am a Computer Science
-            and Engineering student currently in my 10th trimester at United
-            International University in Dhaka, Bangladesh. I have always had a
-            passion for technology and programming, and I am excited to be
-            pursuing my education in this field. I am proficient in several
-            programming languages, including C++, Java, JavaScript, Python, and
-            Dart. I have a keen interest in machine learning, mobile
-            development, and data structures, and I enjoy participating in
-            competitive programming challenges in my free time. I am excited to
-            continue learning and growing as a programmer as I pursue my career
-            in the tech industry.
-          </h3>
-        </div>
-      </div>
+      {tabs[0].current && <ProfileInfo />}
+      {tabs[3].current && <ProfileEdit />}
     </div>
   );
 }
