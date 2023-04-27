@@ -92,6 +92,18 @@ const ProfileInfo = () => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});  
+  useEffect(() => {
+    const usr = localStorage.getItem("loggedInUser");
+    if (usr) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(usr));
+    }
+    else {
+      setIsLoggedIn(false);
+    }
+  }, []);
   return (
     <div>
       <div className="flex p-4">
@@ -100,7 +112,7 @@ const ProfileInfo = () => {
         <div className="border rounded px-4 py-2 mt-4">
           <div className="flex space-x-10">
             <div>
-              <h1 className="text-center font-medium">1</h1>
+              <h1 className="text-center font-medium">{user.reputaion}</h1>
               <h3>reputation</h3>
             </div>
             <div>
@@ -123,17 +135,7 @@ const ProfileInfo = () => {
       <div className="ml-10">
         <h1 className="text-2xl mb-2">About</h1>
         <h3>
-          Hello there! My name is Yeasir Arafat and I am a Computer Science and
-          Engineering student currently in my 10th trimester at United
-          International University in Dhaka, Bangladesh. I have always had a
-          passion for technology and programming, and I am excited to be
-          pursuing my education in this field. I am proficient in several
-          programming languages, including C++, Java, JavaScript, Python, and
-          Dart. I have a keen interest in machine learning, mobile development,
-          and data structures, and I enjoy participating in competitive
-          programming challenges in my free time. I am excited to continue
-          learning and growing as a programmer as I pursue my career in the tech
-          industry.
+          {user.bio}
         </h3>
       </div>
     </div>
@@ -223,13 +225,35 @@ export default function ViewProfile() {
     });
     setTabs(newTabs);
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});  
+  useEffect(() => {
+    const usr = localStorage.getItem("loggedInUser");
+    if (usr) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(usr));
+    }
+    else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+  function getDurationString(dateString) {
+    const startDate = new Date(dateString);
+    const endDate = new Date();
+    const diffTime = Math.abs(endDate - startDate);
+    const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
+    const diffMonths = Math.floor((diffTime % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+  
+    return `Member for ${diffYears} years, ${diffMonths} months`;
+  }
+  
   return (
     <div>
       <div className="flex border-b justify-between ">
         <div className="p-4 flex-shrink-0">
           <Image
             className="rounded-xl"
-            src="/images/yeasir2.jpg"
+            src={user.imageUrl}
             width={150}
             height={150}
             alt=""
@@ -241,13 +265,13 @@ export default function ViewProfile() {
           <div className="flex">
             <CakeIcon className="text-gray-500 hover:text-gray-900" />
             <p className="mt-1 ml-2 text-gray-500">
-              Member for 1 year, 9 months
+              {getDurationString(user.createdAt)}
             </p>
           </div>
 
           <div className="flex space-x-2 mt-2 items-center">
             <Link
-              href="https://facebook.com/yeasir.offical"
+              href={user.facebook?user.facebook:""}
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -265,7 +289,7 @@ export default function ViewProfile() {
               <span className="sr-only">Facebook page</span>
             </Link>
             <Link
-              href="#"
+              href={user.twitter?user.twitter:""}
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -279,7 +303,7 @@ export default function ViewProfile() {
               <span className="sr-only">Twitter page</span>
             </Link>
             <Link
-              href="https://github.com/yeasirar"
+              href={user.github?user.github:""}
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -300,11 +324,11 @@ export default function ViewProfile() {
               href="#"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
-              <LocationOnIcon fontSize="small" /> Dhaka, Bangladesh
+              <LocationOnIcon fontSize="small" />{user.location}
             </Link>
           </div>
         </div>
-        <div className="p-4 flex-shrink-0 ml-auto">
+        {isLoggedIn?<div className="p-4 flex-shrink-0 ml-auto">
           <button
             type="button"
             onClick={() => handleTabClick(3)}
@@ -312,7 +336,7 @@ export default function ViewProfile() {
           >
             Edit Profile
           </button>
-        </div>
+        </div>:<div className="p-4 flex-shrink-0 ml-auto"></div>}
       </div>
       <div className="mt-3 pl-4">
         <div className="sm:block">
