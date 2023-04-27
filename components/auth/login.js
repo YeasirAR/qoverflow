@@ -1,7 +1,31 @@
+import { useState } from "react";
 import logo from "../../public/images/logo.png";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async () => {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },  
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if(res.status === 200) {
+      // alert(data.message);
+      window.location.href = "/";
+    } else {
+      alert(data.message);
+    }
+  };
     return (
       <>
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -22,7 +46,7 @@ export default function Login() {
   
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-slate-50 py-8 px-4 shadow-2xl sm:rounded-lg sm:px-10">
-              <form className="space-y-6" action="#" method="POST">
+              <div className="space-y-6">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                     Email address
@@ -30,8 +54,10 @@ export default function Login() {
                   <div className="mt-1">
                     <input
                       id="email"
-                      name="email"
+                      name="emailAd"
                       type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       autoComplete="email"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -48,6 +74,8 @@ export default function Login() {
                       id="password"
                       name="password"
                       type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       autoComplete="current-password"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -77,13 +105,14 @@ export default function Login() {
   
                 <div>
                   <button
-                    type="submit"
+                    // type="submit"
+                    onClick={handleLogin}
                     className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
                     Sign in
                   </button>
                 </div>
-              </form>
+              </div>
   
               <div className="mt-6">
                 <div className="relative">
@@ -98,9 +127,9 @@ export default function Login() {
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <p className="mt-2 text-center text-sm text-gray-600">
             Don’t have an account? {' '}
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link href="/auth/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
               Sign up
-              </a>
+              </Link>
             </p>
           </div>
 

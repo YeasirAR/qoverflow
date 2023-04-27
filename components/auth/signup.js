@@ -1,7 +1,37 @@
+import Link from "next/link";
 import logo from "../../public/images/logo.png";
 import Image from "next/image";
 
 export default function Login() {
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    const password = e.target.password.value;
+    if(password !== e.target.confirm_password.value) {
+      alert("Password and confirm password does not match");
+      return;
+    }
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },  
+      body: JSON.stringify({
+        name: e.target.name.value,
+        username: e.target.username.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if(res.status === 200) {
+      alert("Account created successfully");
+      window.location.href = "/auth/login";
+    } else {
+      alert(data.message);
+    }
+  };
     return (
       <>
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -22,7 +52,7 @@ export default function Login() {
   
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-slate-50 py-8 px-4 shadow-2xl sm:rounded-lg sm:px-10">
-              <form className="space-y-6" action="#" method="POST">
+              <form className="space-y-6" action="#" method="POST" onSubmit={handleSignup}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Display Name
@@ -143,9 +173,9 @@ export default function Login() {
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <p className="mt-2 text-center text-sm text-gray-600">
             Already have an account? {' '}
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
               Sign In
-              </a>
+              </Link>
             </p>
           </div>
 
