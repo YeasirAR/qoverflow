@@ -483,8 +483,9 @@ export default function ViewQuestion({question_id}) {
                               />
 
                               <div className="mt-2 flex space-x-2">
-                                {question.tags_list.map((tag) => (
+                                {question.tags_list.map((tag,index) => (
                                   <button
+                                  key={index}
                                   type="button"
                                   className="inline-flex items-center rounded-sm border border-gray-500 bg-white px-1 py-0.5 text-sm font-normal text-gray-500 hover:bg-blue-600 indigo-500 hover:text-white focus:outline-none"
                                 >

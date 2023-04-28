@@ -11,7 +11,7 @@ const items = [
   { id: 3, title: 'User Interface Designer', department: 'Design', type: 'Full-time', location: 'Remote' },
 ]
 
-export default function user() {
+export default function User() {
   const [tabs, setTabs] = useState([
     { name: "Reputation", current: true },
     { name: "Name", current: false },
