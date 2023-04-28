@@ -13,6 +13,7 @@ import { useState } from "react";
 import ProfileEdit from "./profile_edit";
 import ProfileSave from "./profile_save";
 import ProfileActivity from "./profile_activity";
+import { useRouter } from "next/router";
 // const tabs = [
 //   { name: "Profile", href: "#", current: true },
 //   { name: "Activity", href: "#", current: false },
@@ -116,17 +117,17 @@ const ProfileInfo = () => {
               <h3>reputation</h3>
             </div>
             <div>
-              <h1 className="text-center font-medium">1</h1>
-              <h3>reached</h3>
+              <h1 className="text-center font-medium">{user.views }</h1>
+              <h3>views</h3>
             </div>
           </div>
           <div className="flex space-x-10 mt-4">
             <div>
-              <h1 className="text-center font-medium">1</h1>
+              <h1 className="text-center font-medium">{user.questionCount}</h1>
               <h3>questions</h3>
             </div>
             <div>
-              <h1 className="text-center font-medium">1</h1>
+              <h1 className="text-center font-medium">{user.answerCount}</h1>
               <h3>answers</h3>
             </div>
           </div>
@@ -208,6 +209,8 @@ const ProfileInfo = () => {
 };
 
 export default function ViewProfile() {
+  const router = useRouter();
+
   const [tabs, setTabs] = useState([
     { name: "Profile", href: "#", current: true },
     { name: "Activity", href: "#", current: false },
@@ -260,8 +263,8 @@ export default function ViewProfile() {
           />
         </div>
         <div className="p-4 pl-0 flex-shrink-0">
-          <h1 className="font-medium text-3xl">Yeasir Arafat</h1>
-          <h1 className="my-2 font-light text-2xl">Software Engineer</h1>
+          <h1 className="font-medium text-3xl">{user.name}</h1>
+          <h1 className="my-2 font-light text-2xl">{user.title}</h1>
           <div className="flex">
             <CakeIcon className="text-gray-500 hover:text-gray-900" />
             <p className="mt-1 ml-2 text-gray-500">

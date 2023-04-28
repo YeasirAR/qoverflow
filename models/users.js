@@ -14,6 +14,9 @@ const usersSchema = new mongoose.Schema({
   facebook: { type: String ,default:"" },
   twitter: { type: String ,default:"" },
   github: { type: String ,default:"" },
+  views : { type: Number ,default:0 },
+  questionCount : { type: Number ,default:0 },
+  answerCount : { type: Number ,default:0 },
 });
 
 const Users = mongoose.models.users || mongoose.model("users", usersSchema);

@@ -1,6 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ProfileEdit() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});  
+  useEffect(() => {
+    const usr = localStorage.getItem("loggedInUser");
+    if (usr) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(usr));
+    }
+    else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
   const [displayName, setDisplayName] = useState("");
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
@@ -12,10 +25,67 @@ function ProfileEdit() {
   const [twitter, setTwitter] = useState("");
   const [github, setGithub] = useState("");
   const [profilePic, setProfilePic] = useState(null);
+  useEffect(() => {
+    if (user) {
+      setDisplayName(user.name);
+      setLocation(user.location);
+      setTitle(user.title);
+      setEmail(user.email);
+      setAbout(user.bio);
+      setFacebook(user.facebook);
+      setTwitter(user.twitter);
+      setGithub(user.github);
+    }
+  }, [user]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // handle form submission
+    if(user.password !== password) return alert("Wrong Password");
+    if(new_password !== "") setPassword(new_password);
+    const data_img = new FormData();
+    data_img.append("file", profilePic);
+    data_img.append("upload_preset", "ac0fxlck");
+    data_img.append("cloud_name", "duhwlswgx");
+    const res_img = await fetch(
+      "https://api.cloudinary.com/v1_1/duhwlswgx/image/upload",
+      {
+        method: "POST",
+        body: data_img,
+      }
+    );
+    const file = await res_img.json();
+    console.log(file.secure_url);
+    const imageUrl = file.secure_url || user.imageUrl;
+    
+    const res = await fetch("/api/user/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },  
+      body: JSON.stringify({
+        name: displayName,
+        username: user.username,
+        location: location,
+        title: title,
+        email: email,
+        password: password,
+        bio: about,
+        facebook: facebook,
+        twitter: twitter,
+        github: github,
+        imageUrl: imageUrl,
+
+      }),
+    });
+    const data = await res.json();
+    if(res.status === 200) {
+      alert(data.message);
+      localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+      window.location.replace("/profile");
+    }
+    else {
+      alert(data.message);
+    }
   };
   
 
