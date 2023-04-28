@@ -1,4 +1,4 @@
-export default function ProfileActivity({profileUrl}) {
+export default function ProfileActivity() {
   const tabs = [
     { name: "New", href: "#", current: true },
     { name: "Old", href: "#", current: false },
@@ -65,28 +65,6 @@ export default function ProfileActivity({profileUrl}) {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  const [user, setUser] = useState({});  
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log(profileUrl);
-      const res = await fetch("/api/user/find", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },  
-        body: JSON.stringify({
-          username: profileUrl,
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
-      if(res.status === 200) {
-        setUser(data);
-      }
-    };
-    fetchData();
-    console.log(profileUrl);
-  }, [profileUrl]);
   return (
     <div className="grid grid-cols-2 mt-3">
       <div className="col-span-1 border border-gray-200 bg-white px-4 py-5 sm:px-6">

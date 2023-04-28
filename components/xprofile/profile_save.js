@@ -1,4 +1,4 @@
-export default function ProfileActivity({profileUrl}) {
+export default function ProfileSave() {
   const tabs = [
     { name: "New", href: "#", current: true },
     { name: "Old", href: "#", current: false },
@@ -20,8 +20,8 @@ export default function ProfileActivity({profileUrl}) {
       href: "#",
       title: "How to cleanly make multiple elements movable anywhere?",
       body: `
-                  <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-                `,
+            <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
+          `,
     },
     {
       id: "81614",
@@ -38,8 +38,8 @@ export default function ProfileActivity({profileUrl}) {
       href: "#",
       title: "How to create 'Published' and 'Last edited' fields?",
       body: `
-                  <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-                `,
+            <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
+          `,
     },
     {
       id: "81614",
@@ -57,36 +57,14 @@ export default function ProfileActivity({profileUrl}) {
       title:
         "ChatBot - Trouble using custom gpt_index and langchain libraries for creating a GPT-3 based search index",
       body: `
-                  <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-                `,
+            <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
+          `,
     },
     // More questions...
   ];
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  const [user, setUser] = useState({});  
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log(profileUrl);
-      const res = await fetch("/api/user/find", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },  
-        body: JSON.stringify({
-          username: profileUrl,
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
-      if(res.status === 200) {
-        setUser(data);
-      }
-    };
-    fetchData();
-    console.log(profileUrl);
-  }, [profileUrl]);
   return (
     <div className="grid grid-cols-2 mt-3">
       <div className="col-span-1 border border-gray-200 bg-white px-4 py-5 sm:px-6">

@@ -54,11 +54,7 @@ const navigation = [
     current: false,
   },
 ];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+
 const communities = [
   { name: "React", href: "#" },
   { name: "Flutter", href: "#" },
@@ -73,140 +69,7 @@ const quicklinks = [
   { name: "Install Node", href: "#" },
   { name: "Setup Project", href: "#" },
 ];
-const tabs = [
-  { name: "Recent", href: "#", current: true },
-  { name: "Most Viewed", href: "#", current: false },
-  { name: "Most Answers", href: "#", current: false },
-];
 
-const questions = [
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "How to cleanly make multiple elements movable anywhere?",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "How to create 'Published' and 'Last edited' fields?",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title:
-      "ChatBot - Trouble using custom gpt_index and langchain libraries for creating a GPT-3 based search index",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-  // More questions...
-];
-const whoToFollow = [
-  {
-    name: "Yeasir Arafat",
-    handle: "yeasirar",
-    href: "#",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    handle: "yeasirar",
-    href: "#",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    handle: "yeasirar",
-    href: "#",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  // More people...
-];
-const trendingPosts = [
-  {
-    id: 1,
-    user: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-    },
-    body: "How to cleanly make multiple elements movable anywhere?",
-    comments: 291,
-  },
-  {
-    id: 1,
-    user: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-    },
-    body: "How to cleanly make multiple elements movable anywhere?",
-    comments: 291,
-  },
-  {
-    id: 1,
-    user: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-    },
-    body: "How to cleanly make multiple elements movable anywhere?",
-    comments: 291,
-  },
-  {
-    id: 1,
-    user: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-    },
-    body: "How to cleanly make multiple elements movable anywhere?",
-    comments: 291,
-  },
-  {
-    id: 1,
-    user: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-    },
-    body: "How to cleanly make multiple elements movable anywhere?",
-    comments: 291,
-  },
-
-  // More posts...
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

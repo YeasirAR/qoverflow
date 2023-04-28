@@ -26,7 +26,7 @@ function classNames(...classes) {
 }
 
 
-const ProfileInfo = () => {
+const ProfileInfo = ({profileUrl}) => {
   const tabs = [
     { name: "New", href: "#", current: true },
     { name: "Old", href: "#", current: false },
@@ -96,15 +96,26 @@ const ProfileInfo = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});  
   useEffect(() => {
-    const usr = localStorage.getItem("loggedInUser");
-    if (usr) {
-      setIsLoggedIn(true);
-      setUser(JSON.parse(usr));
-    }
-    else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+    const fetchData = async () => {
+      console.log(profileUrl);
+      const res = await fetch("/api/user/find", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },  
+        body: JSON.stringify({
+          username: profileUrl,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setUser(data);
+      }
+    };
+    fetchData();
+    console.log(profileUrl);
+  }, [profileUrl]);
   return (
     <div>
       <div className="flex p-4">
@@ -208,14 +219,12 @@ const ProfileInfo = () => {
   );
 };
 
-export default function ViewProfile() {
+export default function XProfile({ profileUrl}) {
   const router = useRouter();
 
   const [tabs, setTabs] = useState([
     { name: "Profile", href: "#", current: true },
-    { name: "Activity", href: "#", current: false },
-    { name: "Saves", href: "#", current: false },
-    { name: "Settings", href: "#", current: false },
+    { name: "Activity", href: "#", current: false },  
   ]);
 
   const handleTabClick = (index) => {
@@ -231,15 +240,27 @@ export default function ViewProfile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});  
   useEffect(() => {
-    const usr = localStorage.getItem("loggedInUser");
-    if (usr) {
-      setIsLoggedIn(true);
-      setUser(JSON.parse(usr));
-    }
-    else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+    const fetchData = async () => {
+      console.log(profileUrl);
+      const res = await fetch("/api/user/find", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },  
+        body: JSON.stringify({
+          username: profileUrl,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setUser(data);
+      }
+    };
+    fetchData();
+    console.log(profileUrl);
+  }, [profileUrl]);
+  
   function getDurationString(dateString) {
     const startDate = new Date(dateString);
     const endDate = new Date();
@@ -249,7 +270,9 @@ export default function ViewProfile() {
   
     return `Member for ${diffYears} years, ${diffMonths} months`;
   }
-  
+  const props = {
+    profileUrl: profileUrl
+  };
   return (
     <div>
       <div className="flex border-b justify-between ">
@@ -331,15 +354,7 @@ export default function ViewProfile() {
             </Link>
           </div>
         </div>
-        {isLoggedIn?<div className="p-4 flex-shrink-0 ml-auto">
-          <button
-            type="button"
-            onClick={() => handleTabClick(3)}
-            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Edit Profile
-          </button>
-        </div>:<div className="p-4 flex-shrink-0 ml-auto"></div>}
+        <div className="p-4 flex-shrink-0 ml-auto"></div>
       </div>
       <div className="mt-3 pl-4">
         <div className="sm:block">
@@ -363,10 +378,8 @@ export default function ViewProfile() {
           </nav>
         </div>
       </div>
-      {tabs[0].current && <ProfileInfo />}
-      {tabs[1].current && <ProfileActivity />}
-      {tabs[2].current && <ProfileSave />}
-      {tabs[3].current && <ProfileEdit />}
+      {tabs[0].current && <ProfileInfo {...props}/>}
+      {tabs[1].current && <ProfileActivity {...props}/>}
     </div>
   );
 }
