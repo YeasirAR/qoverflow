@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,106 +11,6 @@ const items = [
   { id: 3, title: 'User Interface Designer', department: 'Design', type: 'Full-time', location: 'Remote' },
 ]
 
-const people = [
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  {
-    name: "Yeasir Arafat",
-    email: "yeasir402@gmail.com",
-    username: "yeasir402",
-    reputation: "100",
-    tags: "React-NextJS-Flutter",
-    imageUrl: "/images/yeasir.jpg",
-  },
-  
-];
-
 export default function user() {
   const tabs = [
     { name: "Reputation", href: "#", current: true },
@@ -121,7 +21,23 @@ export default function user() {
     return classes.filter(Boolean).join(" ");
   }
 
-  
+  const [people, setPeople] = useState(null);  
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/user/findall", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },  
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setPeople(data);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <div className="mb-3">
@@ -196,7 +112,7 @@ export default function user() {
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
-        {people.map((person) => (
+        {people && people.map((person) => (
           <li
             key={person.email}
             className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
@@ -217,11 +133,11 @@ export default function user() {
               </Link>
               <dl className="mt-0 flex flex-grow flex-col justify-between">
                 <dt className="sr-only">Rep</dt>
-                <dd className="text-sm text-gray-800">Reputation: {person.reputation}</dd>
+                <dd className="text-sm text-gray-800">Reputation: {person.reputaion}</dd>
                 <dt className="sr-only">Rep</dt>
                 <dd className="mt-1">
                   <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
-                    {person.tags}
+                    {person.title || "No Title"}
                   </span>
                 </dd>
               </dl>
