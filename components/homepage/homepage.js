@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import yeasir_img from '../../public/images/yeasir.jpg'
 import {
@@ -25,12 +25,13 @@ import {
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
 
-import { BsFillCaretDownFill as Upvote } from "react-icons/bs";
-import { BsFillCaretUpFill as Downvote } from "react-icons/bs";
+import { BsFillCaretDownFill as Downvote } from "react-icons/bs";
+import { BsFillCaretUpFill as Upvote } from "react-icons/bs";
 
 import { Button } from "@mui/material";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import Link from "next/link";
 
 const items = [
   { id: 1, title: 'Back End Developer', department: 'Engineering', type: 'Full-time', location: 'Remote' },
@@ -73,82 +74,6 @@ const tabs = [
   { name: "Recent", href: "#", current: true },
   { name: "Most Viewed", href: "#", current: false },
   { name: "Most Answers", href: "#", current: false },
-];
-
-const questions = [
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl:"/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "How to cleanly make multiple elements movable anywhere?",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl:"/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "How to create 'Published' and 'Last edited' fields?",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "ChatBot - Trouble using custom gpt_index and langchain libraries for creating a GPT-3 based search index",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-  // More questions...
-];
-const whoToFollow = [
-  {
-    name: "Yeasir Arafat",
-    handle: "yeasirar",
-    href: "#",
-    imageUrl:"/images/yeasir.jpg"  },
-  {
-    name: "Yeasir Arafat",
-    handle: "yeasirar",
-    href: "#",
-    imageUrl:"/images/yeasir.jpg"  },
-  {
-    name: "Yeasir Arafat",
-    handle: "yeasirar",
-    href: "#",
-    imageUrl:"/images/yeasir.jpg"  },
-  // More people...
 ];
 const trendingPosts = [
   {
@@ -199,12 +124,70 @@ const trendingPosts = [
 
   // More posts...
 ];
+const whoToFollow = [
+  {
+    name: "Yeasir Arafat",
+    handle: "yeasirar",
+    href: "#",
+    imageUrl:"/images/yeasir.jpg"  },
+  {
+    name: "Yeasir Arafat",
+    handle: "yeasirar",
+    href: "#",
+    imageUrl:"/images/yeasir.jpg"  },
+  {
+    name: "Yeasir Arafat",
+    handle: "yeasirar",
+    href: "#",
+    imageUrl:"/images/yeasir.jpg"  },
+  // More people...
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+
 export default function HomePage() {
+  const [search, setSearch] = useState("");
+  const [questions, setQuestions] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      // var sort_by = "reputation";
+      // if(tabs[1].current) sort_by = "name";
+      // else if(tabs[2].current) sort_by = "new";
+      // else if(tabs[3].current) sort_by = "old";
+      const res = await fetch("/api/question/get_question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          search: search,
+          // sortby: sort_by,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setQuestions(data);
+      }
+    };
+    fetchData();
+  }, []);
+  function getDate(datetime) {
+    const date = new Date(parseInt(datetime));
+    const options = {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+    return formattedDate;
+  }
+  
   return (
     <>
       <div className="min-h-full">
@@ -338,20 +321,20 @@ export default function HomePage() {
               <div className="mt-4">
                 <h1 className="sr-only">Recent questions</h1>
                 <ul role="list" className="space-y-4">
-                  {questions.map((question) => (
+                  {questions && questions.map((question) => (
                     <li
-                      key={question.id}
+                      key={question._id}
                       className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6"
                     >
                       <article
-                        aria-labelledby={"question-title-" + question.id}
+                        aria-labelledby={"question-title-" + question._id}
                       >
                         <div>
                           <div className="flex space-x-3">
                             <div className="flex-shrink-0">
                               <Image
                                 className="h-10 w-10 rounded-full"
-                                src={question.author.imageUrl}
+                                src={question.authorImageUrl}
                                 height={1000} width={1000}
                                 alt=""
                               />
@@ -359,21 +342,16 @@ export default function HomePage() {
                             <div className="min-w-0 flex-1">
                               <p className="text-sm font-medium text-gray-900">
                                 <a
-                                  href={question.author.href}
+                                  href={"profile/"+question.authorUsername}
                                   className="hover:underline"
                                 >
-                                  {question.author.name}
+                                  {question.author}
                                 </a>
                               </p>
                               <p className="text-sm text-gray-500">
-                                <a
-                                  href={question.href}
-                                  className="hover:underline"
-                                >
-                                  <time dateTime={question.datetime}>
-                                    {question.date}
+                                  <time dateTime={question.date}>
+                                    {getDate(question.date)}
                                   </time>
-                                </a>
                               </p>
                             </div>
                             <div className="flex flex-shrink-0 self-center">
@@ -467,37 +445,32 @@ export default function HomePage() {
                               </Menu>
                             </div>
                           </div>
+                          <Link href={"/question/view/"+question.post_id}>
                           <h2
                             id={"question-title-" + question.id}
                             className="mt-4 text-base font-medium text-gray-900"
                           >
                             {question.title}
                           </h2>
+                          </Link>
                         </div>
+                        <Link href={"/question/view/"+question.post_id}>
                         <div
                           className="mt-2 space-y-4 text-sm text-gray-700 text-justify"
                           dangerouslySetInnerHTML={{ __html: question.body }}
                         />
+                        </Link>
+                        
 
                         <div className="mt-2 flex space-x-2">
-                          <button
+                          {question.tags_list.map((tag) => (
+                            <button
                             type="button"
                             className="inline-flex items-center rounded-sm border border-gray-500 bg-white px-1 py-0.5 text-xs font-normal text-gray-500 hover:bg-blue-600 indigo-500 hover:text-white focus:outline-none"
                           >
-                            React
+                            {tag}
                           </button>
-                          <button
-                            type="button"
-                            className="inline-flex items-center rounded-sm border border-gray-500 bg-white px-1 py-0.5 text-xs font-normal text-gray-500 hover:bg-blue-600 indigo-500 hover:text-white focus:outline-none"
-                          >
-                            Python
-                          </button>
-                          <button
-                            type="button"
-                            className="inline-flex items-center rounded-sm border border-gray-500 bg-white px-1 py-0.5 text-xs font-normal text-gray-500 hover:bg-blue-600 indigo-500 hover:text-white focus:outline-none"
-                          >
-                            Machine Learning
-                          </button>
+                          ))}
                         </div>
 
                         <div className="mt-3 flex justify-between space-x-8">
@@ -509,9 +482,9 @@ export default function HomePage() {
                                   aria-hidden="true"
                                 />
                                 <span className="font-medium text-gray-900">
-                                  +{question.likes}
+                                  {question.vote}
                                 </span>
-                                <span className="sr-only">likes</span>
+                                <span className="sr-only">views</span>
                                 <Downvote
                                   className="h-5 w-5 hover:text-gray-500"
                                   aria-hidden="true"
@@ -528,9 +501,9 @@ export default function HomePage() {
                                   aria-hidden="true"
                                 />
                                 <span className="font-medium text-gray-900">
-                                  {question.replies} Answers
+                                  {question.answers} Answers
                                 </span>
-                                <span className="sr-only">replies</span>
+                                <span className="sr-only">answers</span>
                               </button>
                             </span>
                             <span className="inline-flex items-center text-sm">
@@ -552,9 +525,11 @@ export default function HomePage() {
                           <div className="flex text-sm">
                             <span className="inline-flex items-center text-sm">
                               <span className="font-medium text-gray-900">
+                              <Link href={"/question/view/"+question.post_id}>
                                 <Button variant="outlined" size="small">
                                   ANSWER
                                 </Button>
+                                </Link>
                                 {/* <button
                                   type="button"
                                   className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

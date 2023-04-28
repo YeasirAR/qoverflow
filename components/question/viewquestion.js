@@ -79,26 +79,6 @@ const quicklinks = [
   { name: "Install Node", href: "#" },
   { name: "Setup Project", href: "#" },
 ];
-const questions = [
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "How to cleanly make multiple elements movable anywhere?",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-];
 
 const answers = [
   {
@@ -213,13 +193,47 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ViewQuestion() {
+export default function ViewQuestion({question_id}) {
   const [editorLoaded, setEditorLoaded] = useState(false);
-  const [data, setData] = useState("");
+  const [editorData, setEditorData] = useState("");
 
   useEffect(() => {
     setEditorLoaded(true);
   }, []);
+
+  const [search, setSearch] = useState("");
+  const [question, setQuestion] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/question/get_question_one", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setQuestion(data);      }
+    };
+    fetchData();
+  }, [question_id]);
+  function getDate(datetime) {
+    const date = new Date(parseInt(datetime));
+    const options = {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+    return formattedDate;
+  }
+  
   return (
     <>
       <div className="min-h-full">
@@ -303,23 +317,21 @@ export default function ViewQuestion() {
               </nav>
             </div>
             <main className="lg:col-span-9 xl:col-span-7">
-              <div className="mt-4">
-                {/* <h1 className="sr-only">Recent questions</h1> */}
+              <div className="mt-0">
                 <ul role="list" className="space-y-4">
-                  {questions.map((question) => (
-                    <li
-                      key={question.id}
+                    {question && (<li
+                      key={question.post_id}
                       className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6"
                     >
                       <article
-                        aria-labelledby={"question-title-" + question.id}
+                        aria-labelledby={"question-title-"+ question.post_id}
                       >
                         <div>
                           <div className="flex space-x-3">
                             <div className="flex-shrink-0">
                               <Image
                                 className="h-10 w-10 rounded-full"
-                                src={question.author.imageUrl}
+                                src={question.authorImageUrl}
                                 height={1000}
                                 width={1000}
                                 alt=""
@@ -328,10 +340,10 @@ export default function ViewQuestion() {
                             <div className="min-w-0 flex-1">
                               <p className="text-sm font-medium text-gray-900">
                                 <a
-                                  href={question.author.href}
+                                  href={"/profile/"+question.authorUsername}
                                   className="hover:underline"
                                 >
-                                  {question.author.name}
+                                  {question.author}
                                 </a>
                               </p>
                               <p className="text-sm text-gray-500">
@@ -339,8 +351,8 @@ export default function ViewQuestion() {
                                   href={question.href}
                                   className="hover:underline"
                                 >
-                                  <time dateTime={question.datetime}>
-                                    {question.date}
+                                  <time dateTime={question.date}>
+                                    {getDate(question.date)}
                                   </time>
                                 </a>
                               </p>
@@ -457,7 +469,7 @@ export default function ViewQuestion() {
                             <div className="col-span-11">
                               <div>
                                 <h2
-                                  id={"question-title-" + question.id}
+                                  id={"question-title-" + question.post_id}
                                   className="mt-4 text-lg font-medium text-gray-900"
                                 >
                                   {question.title}
@@ -471,31 +483,21 @@ export default function ViewQuestion() {
                               />
 
                               <div className="mt-2 flex space-x-2">
-                                <button
+                                {question.tags_list.map((tag) => (
+                                  <button
                                   type="button"
                                   className="inline-flex items-center rounded-sm border border-gray-500 bg-white px-1 py-0.5 text-sm font-normal text-gray-500 hover:bg-blue-600 indigo-500 hover:text-white focus:outline-none"
                                 >
-                                  React
+                                  {tag}
                                 </button>
-                                <button
-                                  type="button"
-                                  className="inline-flex items-center rounded-sm border border-gray-500 bg-white px-1 py-0.5 text-sm font-normal text-gray-500 hover:bg-blue-600 indigo-500 hover:text-white focus:outline-none"
-                                >
-                                  Python
-                                </button>
-                                <button
-                                  type="button"
-                                  className="inline-flex items-center rounded-sm border border-gray-500 bg-white px-1 py-0.5 text-sm font-normal text-gray-500 hover:bg-blue-600 indigo-500 hover:text-white focus:outline-none"
-                                >
-                                  Machine Learning
-                                </button>
+                                ))}
+                                
                               </div>
                             </div>
                           </div>
                         </div>
                       </article>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </div>
               <div className="space-y-6 mt-2">
@@ -788,7 +790,7 @@ export default function ViewQuestion() {
                       <Editor
                         name="description"
                         onChange={(data) => {
-                          setData(data);
+                          setEditorData(data);
                         }}
                         editorLoaded={editorLoaded}
                       />
