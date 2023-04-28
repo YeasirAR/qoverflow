@@ -113,7 +113,7 @@ const ProfileInfo = () => {
         <div className="border rounded px-4 py-2 mt-4">
           <div className="flex space-x-10">
             <div>
-              <h1 className="text-center font-medium">{user.reputaion}</h1>
+              <h1 className="text-center font-medium">{user.reputation}</h1>
               <h3>reputation</h3>
             </div>
             <div>

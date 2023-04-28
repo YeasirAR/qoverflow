@@ -12,23 +12,45 @@ const items = [
 ]
 
 export default function user() {
-  const tabs = [
-    { name: "Reputation", href: "#", current: true },
-    { name: "New Users", href: "#", current: false },
-    { name: "Old Users", href: "#", current: false },
-  ];
+  const [tabs, setTabs] = useState([
+    { name: "Reputation", current: true },
+    { name: "Name", current: false },
+    { name: "New", current: false },
+    { name: "Old", current: false },
+  ])
+
+  const changeTab = (index) => {
+    const tempTabs = [...tabs];
+    tempTabs.forEach((tab, i) => {
+      if (i === index) {
+        tab.current = true;
+      } else {
+        tab.current = false;
+      }
+    });
+    setTabs(tempTabs);
+  };
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-
+  const [search, setSearch] = useState("");
   const [people, setPeople] = useState(null);  
   useEffect(() => {
     const fetchData = async () => {
+      var sort_by = "reputation";
+      if(tabs[1].current) sort_by = "name";
+      else if(tabs[2].current) sort_by = "new";
+      else if(tabs[3].current) sort_by = "old";
       const res = await fetch("/api/user/findall", {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },  
+        },
+        body: JSON.stringify({
+          search: search,
+          sortby: sort_by,
+        }),
       });
       const data = await res.json();
       console.log(data);
@@ -37,7 +59,7 @@ export default function user() {
       }
     };
     fetchData();
-  }, []);
+  }, [search, tabs]);
   return (
     <>
       <div className="mb-3">
@@ -56,6 +78,7 @@ export default function user() {
             name="search"
             className="block w-40 sm:w-80 rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-rose-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-rose-500 sm:text-sm"
             placeholder="Filter by user"
+            onChange={(e) => setSearch(e.target.value)}
             type="search"
           />
         </div>
@@ -84,6 +107,7 @@ export default function user() {
                 <a
                   key={tab.name}
                   href={tab.href}
+                  onClick={() => changeTab(tabIdx)}
                   aria-current={tab.current ? "page" : undefined}
                   className={classNames(
                     tab.current
@@ -94,7 +118,7 @@ export default function user() {
                     "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-xs font-medium text-center hover:bg-gray-50 focus:z-10"
                   )}
                 >
-                  <span>{tab.name}</span>
+                  <span >{tab.name}</span>
                   <span
                     aria-hidden="true"
                     className={classNames(
@@ -133,7 +157,7 @@ export default function user() {
               </Link>
               <dl className="mt-0 flex flex-grow flex-col justify-between">
                 <dt className="sr-only">Rep</dt>
-                <dd className="text-sm text-gray-800">Reputation: {person.reputaion}</dd>
+                <dd className="text-sm text-gray-800">Reputation: {person.reputation}</dd>
                 <dt className="sr-only">Rep</dt>
                 <dd className="mt-1">
                   <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">

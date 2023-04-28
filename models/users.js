@@ -9,7 +9,7 @@ const usersSchema = new mongoose.Schema({
   location: { type: String ,default:"" },
   imageUrl: { type: String ,default:"/images/default.jpg" },
   bio: { type: String ,default:"" },
-  reputaion: { type: Number, default: 0 },
+  reputation: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   facebook: { type: String ,default:"" },
   twitter: { type: String ,default:"" },
