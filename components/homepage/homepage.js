@@ -148,8 +148,7 @@ function classNames(...classes) {
 }
 
 
-export default function HomePage() {
-  const [search, setSearch] = useState("");
+export default function HomePage({search}) {
   const [questions, setQuestions] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -174,7 +173,7 @@ export default function HomePage() {
       }
     };
     fetchData();
-  }, []);
+  }, [search]);
   function getDate(datetime) {
     const date = new Date(parseInt(datetime));
     const options = {
@@ -187,7 +186,7 @@ export default function HomePage() {
     const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
     return formattedDate;
   }
-  
+
   return (
     <>
       <div className="min-h-full">

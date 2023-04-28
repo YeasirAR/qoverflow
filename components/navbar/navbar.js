@@ -46,7 +46,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function HomePage() {
+export default function Navbar({onSearchChange }) {
+  const [search, setSearch] = useState('');
+  const handleSearchChange = (event) => {
+    const newSearch = event.target.value;
+    setSearch(newSearch);
+    onSearchChange(newSearch);
+  };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState({});  
@@ -111,6 +117,7 @@ export default function HomePage() {
                             className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-rose-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-rose-500 sm:text-sm"
                             placeholder="Search"
                             type="search"
+                            value={search} onChange={handleSearchChange}
                           />
                         </div>
                       </div>
