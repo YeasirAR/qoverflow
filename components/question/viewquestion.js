@@ -32,7 +32,7 @@ import { BsFillCaretUpFill as Upvote } from "react-icons/bs";
 
 import { Button } from "@mui/material";
 import Image from "next/image";
-import Editor from "../editor/editor";
+import Editor from "../../components/editor/editor";
 import Link from "next/link";
 import { useRouter } from "next/router";
 const user = {
@@ -308,7 +308,7 @@ export default function ViewQuestion({question_id}) {
       console.log(data);
       if(res.status === 200) {
         setComments(data);
-        alert("Comments loaded successfully");
+        // alert("Comments loaded successfully");
       }
     };
     fetchData();
@@ -330,12 +330,12 @@ export default function ViewQuestion({question_id}) {
       }),
     });
     const resp = await res.json();
-    if(resp.status === 200){
-      alert(resp.message);
-    }
-    else{
-      alert(resp.message);
-    }
+    // if(resp.status === 200){
+    //   alert(resp.message);
+    // }
+    // else{
+    //   alert(resp.message);
+    // }
   };
 
   
@@ -705,6 +705,7 @@ export default function ViewQuestion({question_id}) {
                               </a>
                               <button
                                 type="submit"
+                                onClick={addComment}
                                 className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                               >
                                 Comment
