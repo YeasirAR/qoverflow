@@ -6,89 +6,71 @@ export default function ProfileActivity({profileUrl}) {
     { name: "Old", href: "#", current: false },
     { name: "Rep", href: "#", current: false },
   ];
-  const questions = [
-    {
-      id: "81614",
-      likes: "29",
-      replies: "11",
-      views: "2.7k",
-      author: {
-        name: "Yeasir Arafat",
-        imageUrl: "/images/yeasir.jpg",
-        href: "#",
-      },
-      date: "December 9 at 11:43 AM",
-      datetime: "2020-12-09T11:43:00",
-      href: "#",
-      title: "How to cleanly make multiple elements movable anywhere?",
-      body: `
-                  <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-                `,
-    },
-    {
-      id: "81614",
-      likes: "29",
-      replies: "11",
-      views: "2.7k",
-      author: {
-        name: "Yeasir Arafat",
-        imageUrl: "/images/yeasir.jpg",
-        href: "#",
-      },
-      date: "December 9 at 11:43 AM",
-      datetime: "2020-12-09T11:43:00",
-      href: "#",
-      title: "How to create 'Published' and 'Last edited' fields?",
-      body: `
-                  <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-                `,
-    },
-    {
-      id: "81614",
-      likes: "29",
-      replies: "11",
-      views: "2.7k",
-      author: {
-        name: "Yeasir Arafat",
-        imageUrl: "/images/yeasir.jpg",
-        href: "#",
-      },
-      date: "December 9 at 11:43 AM",
-      datetime: "2020-12-09T11:43:00",
-      href: "#",
-      title:
-        "ChatBot - Trouble using custom gpt_index and langchain libraries for creating a GPT-3 based search index",
-      body: `
-                  <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-                `,
-    },
-    // More questions...
-  ];
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  const [user, setUser] = useState({});  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});
+
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(profileUrl);
+    const usr = localStorage.getItem("loggedInUser");
+    if (usr) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(usr));
+    } else {
+      setIsLoggedIn(false);
+    }
+    const tempFunc = async () => {
       const res = await fetch("/api/user/find", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },  
+        },
         body: JSON.stringify({
-          username: profileUrl,
+          username: user.username,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.status === 200) {
+        localStorage.setItem("loggedInUser", JSON.stringify(data));
+      }
+    };
+    tempFunc();
+  }, []);
+  const [trquestions, setTrQuestions] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const res = await fetch("/api/question/get_question_user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.username,
         }),
       });
       const data = await res.json();
       console.log(data);
       if(res.status === 200) {
-        setUser(data);
+        setTrQuestions(data);
       }
     };
     fetchData();
-    console.log(profileUrl);
-  }, [profileUrl]);
+  }, [user]);
+  function getDate(datetime) {
+    const date = new Date(parseInt(datetime));
+    const options = {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+    return formattedDate;
+  }
   return (
     <div className="grid grid-cols-2 mt-3">
       <div className="col-span-1 border border-gray-200 bg-white px-4 py-5 sm:px-6">
@@ -134,20 +116,17 @@ export default function ProfileActivity({profileUrl}) {
         </div>
         <div>
           <ul role="list" className="space-y-2 mt-2">
-            {questions.map((question) => (
+          {trquestions && trquestions.slice(0,5).map((question) => (
               <li
-                key={question.id}
+                key={question._id}
                 className="bg-white px-4 py-2 shadow sm:rounded-lg sm:p-2"
               >
                 <div className="grid grid-cols-12 text-sm">
                   <h1 className="col-span-1 rounded bg-blue-400 text-white text-center">
-                    {question.likes}
+                    {question.vote}
                   </h1>
-                  <h1 className="ml-2 col-span-8">
-                    {question.title.slice(0, 40)}
-                  </h1>
-                  <h1 className="ml-5 col-span-3">
-                    {question.datetime.slice(0, 10)}
+                  <h1 className="ml-2 col-span-11">
+                    {question.title.slice(0, 60)}
                   </h1>
                 </div>
               </li>
@@ -198,20 +177,17 @@ export default function ProfileActivity({profileUrl}) {
         </div>
         <div>
           <ul role="list" className="space-y-2 mt-2">
-            {questions.map((question) => (
+          {trquestions && trquestions.slice(0,5).map((question) => (
               <li
-                key={question.id}
+                key={question._id}
                 className="bg-white px-4 py-2 shadow sm:rounded-lg sm:p-2"
               >
                 <div className="grid grid-cols-12 text-sm">
                   <h1 className="col-span-1 rounded bg-blue-400 text-white text-center">
-                    {question.likes}
+                    {question.vote}
                   </h1>
-                  <h1 className="ml-2 col-span-8">
-                    {question.title.slice(0, 40)}
-                  </h1>
-                  <h1 className="ml-5 col-span-3">
-                    {question.datetime.slice(0, 10)}
+                  <h1 className="ml-2 col-span-11">
+                    {question.title.slice(0, 60)}
                   </h1>
                 </div>
               </li>
