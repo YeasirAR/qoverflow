@@ -33,20 +33,22 @@ import { BsFillCaretUpFill as Upvote } from "react-icons/bs";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import Editor from "../editor/editor";
+import Link from "next/link";
+import { useRouter } from "next/router";
 const user = {
   name: "Yeasir Arafat",
   email: "yeasir402@gmail.com",
   imageUrl: "/images/yeasir.jpg",
 };
-const comments = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    date: "4d ago",
-    imageUrl: "/images/anna.jpeg",
-    body: "Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.",
-  },
-];
+// const comments = [
+//   {
+//     id: 1,
+//     name: "Leslie Alexander",
+//     date: "4d ago",
+//     imageUrl: "/images/anna.jpeg",
+//     body: "Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.",
+//   },
+// ];
 const navigation = [
   { name: "Home", href: "#", icon: HomeIcon, current: true },
   { name: "Questions", href: "#", icon: FireIcon, current: false },
@@ -80,44 +82,44 @@ const quicklinks = [
   { name: "Setup Project", href: "#" },
 ];
 
-const answers = [
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "How to cleanly make multiple elements movable anywhere?",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Yeasir Arafat",
-      imageUrl: "/images/yeasir.jpg",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "How to cleanly make multiple elements movable anywhere?",
-    body: `
-      <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
-    `,
-  },
-];
+// const answers = [
+//   {
+//     id: "81614",
+//     likes: "29",
+//     replies: "11",
+//     views: "2.7k",
+//     author: {
+//       name: "Yeasir Arafat",
+//       imageUrl: "/images/yeasir.jpg",
+//       href: "#",
+//     },
+//     date: "December 9 at 11:43 AM",
+//     datetime: "2020-12-09T11:43:00",
+//     href: "#",
+//     title: "How to cleanly make multiple elements movable anywhere?",
+//     body: `
+//       <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
+//     `,
+//   },
+//   {
+//     id: "81614",
+//     likes: "29",
+//     replies: "11",
+//     views: "2.7k",
+//     author: {
+//       name: "Yeasir Arafat",
+//       imageUrl: "/images/yeasir.jpg",
+//       href: "#",
+//     },
+//     date: "December 9 at 11:43 AM",
+//     datetime: "2020-12-09T11:43:00",
+//     href: "#",
+//     title: "How to cleanly make multiple elements movable anywhere?",
+//     body: `
+//       <p>The problem is: I don't wanna test for every single date field, like year, month, day, hour, minute, etc., but if I simply compare the two values, it'll always display both values, since the time precision goes beyond seconds, making the dates different even though I never edited that particular post.</p>
+//     `,
+//   },
+// ];
 const whoToFollow = [
   {
     name: "Yeasir Arafat",
@@ -233,6 +235,109 @@ export default function ViewQuestion({question_id}) {
     const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
     return formattedDate;
   }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});  
+  useEffect(() => {
+    const usr = localStorage.getItem("loggedInUser");
+    if (usr) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(usr));
+    }
+    else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const [answers, setAnswers] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/answer/get_answers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setAnswers(data);
+        // alert("Answers loaded successfully");
+      }
+    };
+    fetchData();
+  }, [question_id]);
+
+  const addAnswer = async () => {
+    const res = await fetch("/api/answer/add_answer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        body: editorData,
+        post_id: question_id,
+        author: user.name,
+        authorImageUrl: user.imageUrl,
+        authorUsername: user.username,
+      }),
+    });
+    const resp = await res.json();
+    // if(resp.status === 200){
+    //   alert(resp.message);
+    // }
+    // else{
+    //   alert(resp.message);
+    // }
+  };
+  const [comments, setComments] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/comment/get_comments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setComments(data);
+        alert("Comments loaded successfully");
+      }
+    };
+    fetchData();
+  }, [question_id]);
+
+  const [comment_body, setCommentBody] = useState("");
+  const addComment = async () => {
+    const res = await fetch("/api/comment/add_comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        body: comment_body,
+        post_id: question_id,
+        author: user.name,
+        authorImageUrl: user.imageUrl,
+        authorUsername: user.username,
+      }),
+    });
+    const resp = await res.json();
+    if(resp.status === 200){
+      alert(resp.message);
+    }
+    else{
+      alert(resp.message);
+    }
+  };
+
   
   return (
     <>
@@ -454,8 +559,8 @@ export default function ViewQuestion({question_id}) {
                                 className="h-9 w-9 mt-8 hover:text-gray-500"
                                 aria-hidden="true"
                               />
-                              <h1 className="font-medium text-lg text-gray-900 ml-2">
-                                20
+                              <h1 className="font-medium text-lg text-gray-900 ml-3">
+                                {question.vote}
                               </h1>
                               <Downvote
                                 className="h-9 w-9 hover:text-gray-500"
@@ -515,15 +620,15 @@ export default function ViewQuestion({question_id}) {
                       </div>
                       <div className="px-4 py-6 sm:px-6">
                         <ul role="list" className="space-y-8">
-                          {comments.map((comment) => (
-                            <li key={comment.id}>
+                          {comments && comments.map((comment) => (
+                            <li key={comment._id}>
                               <div className="flex space-x-3">
                                 <div className="flex-shrink-0">
                                   <Image
                                     height={100}
                                     width={100}
                                     className="h-10 w-10 rounded-full"
-                                    src={comment.imageUrl}
+                                    src={comment.authorImageUrl}
                                     alt=""
                                   />
                                 </div>
@@ -533,7 +638,7 @@ export default function ViewQuestion({question_id}) {
                                       href="#"
                                       className="font-medium text-gray-900"
                                     >
-                                      {comment.name}
+                                      {comment.authorName}
                                     </a>
                                   </div>
                                   <div className="mt-1 text-sm text-gray-700">
@@ -541,7 +646,7 @@ export default function ViewQuestion({question_id}) {
                                   </div>
                                   <div className="mt-2 space-x-2 text-sm">
                                     <span className="font-medium text-gray-500">
-                                      {comment.date}
+                                      {getDate(comment.date)}
                                     </span>{" "}
                                     <span className="font-medium text-gray-500">
                                       &middot;
@@ -561,7 +666,7 @@ export default function ViewQuestion({question_id}) {
                       </div>
                     </div>
                     <div className="bg-gray-50 px-4 py-6 sm:px-6">
-                      <div className="flex space-x-3">
+                        {isLoggedIn? (<div className="flex space-x-3">
                         <div className="flex-shrink-0">
                           <Image
                             height={100}
@@ -583,7 +688,8 @@ export default function ViewQuestion({question_id}) {
                                 rows={3}
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Add a comment"
-                                defaultValue={""}
+                                value={comment_body}
+                                onChange={(e) => setComment(e.target.value)}
                               />
                             </div>
                             <div className="mt-3 flex items-center justify-between">
@@ -606,7 +712,8 @@ export default function ViewQuestion({question_id}) {
                             </div>
                           </form>
                         </div>
-                      </div>
+                      </div>):(<Link href="/auth/login">Login to add comment</Link>)}
+                      
                     </div>
                   </div>
                 </section>
@@ -618,23 +725,24 @@ export default function ViewQuestion({question_id}) {
                       id="notes-title"
                       className="text-lg font-medium text-gray-900"
                     >
-                      {answers.length + " "}Answers
+                      {/* {answers.length + " "}Answers */}
+                      Answers
                     </h2>
                   </div>
                   {/* <h1 className="sr-only">Recent questions</h1> */}
                   <ul role="list" className="space-y-2">
-                    {answers.map((answer) => (
+                    {answers && answers.map((answer) => (
                       <li
-                        key={answer.id}
+                        key={answer._id}
                         className="bg-white px-4 shadow  sm:p-6"
                       >
-                        <article aria-labelledby={"answer-title-" + answer.id}>
+                        <article aria-labelledby={"answer-title-" + answer._id}>
                           <div>
                             <div className="flex space-x-3">
                               <div className="flex-shrink-0">
                                 <Image
                                   className="h-10 w-10 rounded-full"
-                                  src={answer.author.imageUrl}
+                                  src={answer.authorImageUrl}
                                   height={1000}
                                   width={1000}
                                   alt=""
@@ -643,19 +751,19 @@ export default function ViewQuestion({question_id}) {
                               <div className="min-w-0 flex-1">
                                 <p className="text-sm font-medium text-gray-900">
                                   <a
-                                    href={answer.author.href}
+                                    href={answer.authorUsername}
                                     className="hover:underline"
                                   >
-                                    {answer.author.name}
+                                    {answer.author}
                                   </a>
                                 </p>
                                 <p className="text-sm text-gray-500">
                                   <a
-                                    href={answer.href}
+                                    href={answer.authorUsername}
                                     className="hover:underline"
                                   >
-                                    <time dateTime={answer.datetime}>
-                                      {answer.date}
+                                    <time dateTime={answer.date}>
+                                      {getDate(answer.date)}
                                     </time>
                                   </a>
                                 </p>
@@ -757,8 +865,8 @@ export default function ViewQuestion({question_id}) {
                                   className="h-9 w-9 mt-2 hover:text-gray-500"
                                   aria-hidden="true"
                                 />
-                                <h1 className="font-medium text-lg text-gray-900 ml-2">
-                                  20
+                                <h1 className="font-medium text-lg text-gray-900 ml-3">
+                                  {answer.vote}
                                 </h1>
                                 <Downvote
                                   className="h-9 w-9 hover:text-gray-500"
@@ -784,7 +892,7 @@ export default function ViewQuestion({question_id}) {
                       </li>
                     ))}
                     <div className="bg-white px-4 shadow  sm:p-6">
-                      <h1 className="mb-2 text-2xl font-medium text-gray-700">
+                    <h1 className="mb-2 text-2xl font-medium text-gray-700">
                         {" "}
                         Add Your Answer Here
                       </h1>
@@ -797,9 +905,21 @@ export default function ViewQuestion({question_id}) {
                       />
 
                       {/* {JSON.stringify(data)} */}
-                      <Button variant="outlined" size="medium" className="mt-2">
+                      {isLoggedIn && 
+                      <Button variant="outlined" size="medium" className="mt-2" onClick={addAnswer}>
                         Post Your Answer
                       </Button>
+                      }
+                    </div>
+                    
+                    <div className="bg-white px-4 shadow  sm:p-6">
+                    {!isLoggedIn && <div><h1 className="mb-2 text-xl font-medium text-gray-700">
+                        {" "}
+                        You need to login to post your answer
+                      </h1>
+                      <Link href="/auth/login"><Button variant="outlined" size="medium" className="mt-2">
+                        Login or Signup 
+                      </Button></Link> </div>}
                     </div>
                   </ul>
                 </div>
