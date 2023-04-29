@@ -689,7 +689,7 @@ export default function ViewQuestion({question_id}) {
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Add a comment"
                                 value={comment_body}
-                                onChange={(e) => setComment(e.target.value)}
+                                onChange={(e) => setCommentBody(e.target.value)}
                               />
                             </div>
                             <div className="mt-3 flex items-center justify-between">
