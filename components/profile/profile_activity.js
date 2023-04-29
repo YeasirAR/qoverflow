@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export default function ProfileActivity({profileUrl}) {
   const tabs = [
     { name: "New", href: "#", current: true },

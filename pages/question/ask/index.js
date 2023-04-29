@@ -31,6 +31,7 @@ import { BsFillCaretUpFill as Downvote } from "react-icons/bs";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import { Input } from "@material-tailwind/react";
+import Link from "next/link";
 const user = {
   name: "Yeasir Arafat",
   email: "yeasir402@gmail.com",
@@ -217,6 +218,8 @@ export default function AskQuestion() {
   const [editorLoadedExp, setEditorExpLoaded] = useState(false);
   const [dataQsn, setDataQsn] = useState("");
   const [dataExp, setDataExp] = useState("");
+  const [title, setTitle] = useState("");
+  const [tag, setTag] = useState("");
 
   useEffect(() => {
     setEditorQsnLoaded(true);
@@ -224,6 +227,49 @@ export default function AskQuestion() {
   useEffect(() => {
     setEditorExpLoaded(true);
   }, []);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});  
+  useEffect(() => {
+    const usr = localStorage.getItem("loggedInUser");
+    if (usr) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(usr));
+    }
+    else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const handlePublish = async () => {
+    const res = await fetch("/api/question/add_question", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: title,
+        body: dataQsn+"<br></br>"+dataExp,
+        post_id: getRandomInt(1, 100000000),
+        author: user.name,
+        authorImageUrl: user.imageUrl,
+        authorUsername: user.username,
+        comment_list:[],
+        answer_list:[],
+        tags_list:tag.split(","),
+      }),
+    });
+    const resp = await res.json();
+    if(resp.status === 200){
+      alert(resp.message);
+    }
+    else{
+      alert(resp.message);
+    }
+  };
   return (
     <>
       <div className="min-h-full">
@@ -234,6 +280,7 @@ export default function AskQuestion() {
                 aria-label="Sidebar"
                 className="sticky top-4 divide-y divide-gray-300"
               >
+              
                 <div className="space-y-1 pb-8">
                   {navigation.map((item) => (
                     <a
@@ -355,6 +402,8 @@ export default function AskQuestion() {
                           type="text"
                           name="title"
                           id="title"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           placeholder="e.g. Is there an R function for finding the index of an element of a vector?"
                           aria-describedby="title-description"
@@ -425,13 +474,15 @@ export default function AskQuestion() {
                         id="tag-description"
                       >
                         Add up to 5 tags to describe what your question is
-                        about. Start typing to see suggestions.
+                        about. Tags should be separated by comma.
                       </p>
                       <div className="mt-1">
                         <input
                           type="text"
                           name="tag"
                           id="tag"
+                          value={tag}
+                          onChange={(e) => setTag(e.target.value)}
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           placeholder="e.g. react, javascript, typescript, python"
                           aria-describedby="tag-description"
@@ -439,19 +490,25 @@ export default function AskQuestion() {
                       </div>
                     </div>
                   </li>
+                  
                   <li className="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
+                  <Link href="/">
                     <button
                       type="button"
+                      onClick={handlePublish}
                       className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                       Publish
                     </button>
+                    </Link>
+                    <Link href="/">
                     <button
                       type="button"
                       className="ml-3 inline-flex items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-offset-2"
                     >
                       Discard
                     </button>
+                    </Link>
                   </li>
                 </ul>
               </div>

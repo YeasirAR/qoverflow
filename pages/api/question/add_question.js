@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     await newQuestion.save();
     const questions = await Questions.find();
     if (questions) {
-      res.status(200).json(questions);
+      res.status(200).json({message: "Question added successfully"});
     } else {
       res.status(409).json({ message: "Something went wrong"});
     }
