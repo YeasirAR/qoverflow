@@ -50,22 +50,10 @@ const user = {
 //   },
 // ];
 const navigation = [
-  { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "Questions", href: "#", icon: FireIcon, current: false },
-  { name: "Tags", href: "#", icon: ArrowTrendingUpIcon, current: false },
-  { name: "Users", href: "#", icon: UserGroupIcon, current: false },
-  {
-    name: "About",
-    href: "/about",
-    icon: InformationCircleIcon,
-    current: false,
-  },
-  {
-    name: "Contact",
-    href: "/contact",
-    icon: ChatBubbleBottomCenterTextIcon,
-    current: false,
-  },
+  { name: "Home", href: "#", icon: HomeIcon, current: false },
+  { name: "Tags", href: "/tags", icon: ArrowTrendingUpIcon, current: false },
+  { name: "Users", href: "/users", icon: UserGroupIcon, current: false },
+  { name: "Contact", href: "/contact", icon: ChatBubbleBottomCenterTextIcon, current: false },
 ];
 const communities = [
   { name: "React", href: "#" },
@@ -285,13 +273,28 @@ export default function ViewQuestion({question_id}) {
       }),
     });
     const resp = await res.json();
-    window.location.reload();
+    
     // if(resp.status === 200){
     //   alert(resp.message);
     // }
     // else{
     //   alert(resp.message);
     // }
+    const fetchData = async () => {
+      const res = await fetch("/api/question/update_question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+          todo: "answer",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData();
+    window.location.reload();
   };
   const [comments, setComments] = useState(null);
   useEffect(() => {
@@ -382,6 +385,93 @@ export default function ViewQuestion({question_id}) {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/question/update_question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+          todo: "view",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData();
+  }, [question_id]);
+  
+  const increaseVote =() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/question/update_question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+          todo: "upvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData();
+    window.location.reload();
+  };
+  const decreaseVote =() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/question/update_question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+          todo: "downvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData();
+    window.location.reload();
+  };
+  const increaseVoteAnswer =() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/answer/update_answer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+          todo: "upvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData();
+    window.location.reload();
+  };
+  const decreaseVoteAnswer =() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/answer/update_answer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: question_id,
+          todo: "downvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData();
+    window.location.reload();
+  };
+
   return (
     <>
       <div className="min-h-full">
@@ -601,6 +691,7 @@ export default function ViewQuestion({question_id}) {
                               <Upvote
                                 className="h-9 w-9 mt-8 hover:text-gray-500"
                                 aria-hidden="true"
+                                onClick={increaseVote}
                               />
                               <h1 className="font-medium text-lg text-gray-900 ml-3">
                                 {question.vote}
@@ -608,6 +699,7 @@ export default function ViewQuestion({question_id}) {
                               <Downvote
                                 className="h-9 w-9 hover:text-gray-500"
                                 aria-hidden="true"
+                                onClick={decreaseVote}
                               />
                               {/* <SaveRoundedIcon
                                 className="h-6 w-6 hover:text-gray-500"
@@ -903,6 +995,7 @@ export default function ViewQuestion({question_id}) {
                                 <Upvote
                                   className="h-9 w-9 mt-2 hover:text-gray-500"
                                   aria-hidden="true"
+                                  onClick={increaseVoteAnswer}
                                 />
                                 <h1 className="font-medium text-lg text-gray-900 ml-3">
                                   {answer.vote}
@@ -910,6 +1003,7 @@ export default function ViewQuestion({question_id}) {
                                 <Downvote
                                   className="h-9 w-9 hover:text-gray-500"
                                   aria-hidden="true"
+                                  onClick={decreaseVoteAnswer}
                                 />
                                 {/* <SaveRoundedIcon
                                 className="h-6 w-6 hover:text-gray-500"

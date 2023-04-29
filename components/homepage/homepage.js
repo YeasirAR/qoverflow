@@ -45,10 +45,8 @@ const user = {
 };
 const navigation = [
   { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "Questions", href: "#", icon: FireIcon, current: false },
   { name: "Tags", href: "/tags", icon: ArrowTrendingUpIcon, current: false },
   { name: "Users", href: "/users", icon: UserGroupIcon, current: false },
-  { name: "About", href: "/about", icon: InformationCircleIcon, current: false },
   { name: "Contact", href: "/contact", icon: ChatBubbleBottomCenterTextIcon, current: false },
 ];
 const userNavigation = [
