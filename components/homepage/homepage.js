@@ -70,11 +70,11 @@ const quicklinks = [
   { name: "Install Node", href: "#" },
   { name: "Setup Project", href: "#" },
 ];
-const tabs = [
-  { name: "Recent", href: "#", current: true },
-  { name: "Most Viewed", href: "#", current: false },
-  { name: "Most Answers", href: "#", current: false },
-];
+// const tabs = [
+//   { name: "Recent", href: "#", current: true },
+//   { name: "Most Viewed", href: "#", current: false },
+//   { name: "Most Answers", href: "#", current: false },
+// ];
 const trendingPosts = [
   {
     id: 1,
@@ -149,31 +149,7 @@ function classNames(...classes) {
 
 
 export default function HomePage({search}) {
-  const [questions, setQuestions] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      // var sort_by = "reputation";
-      // if(tabs[1].current) sort_by = "name";
-      // else if(tabs[2].current) sort_by = "new";
-      // else if(tabs[3].current) sort_by = "old";
-      const res = await fetch("/api/question/get_question", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          search: search,
-          // sortby: sort_by,
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
-      if(res.status === 200) {
-        setQuestions(data);
-      }
-    };
-    fetchData();
-  }, [search]);
+
   function getDate(datetime) {
     const date = new Date(parseInt(datetime));
     const options = {
@@ -205,6 +181,68 @@ export default function HomePage({search}) {
       console.log(data);
       if(res.status === 200) {
         setTopUser(data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const [tabs, setTabs] = useState([
+    { name: "Recent", current: true },
+    { name: "Most Viewed", current: false },
+    { name: "Most Answers", current: false },
+  ])
+  const changeTab = (index) => {
+    const tempTabs = [...tabs];
+    tempTabs.forEach((tab, i) => {
+      if (i === index) {
+        tab.current = true;
+      } else {
+        tab.current = false;
+      }
+    });
+    setTabs(tempTabs);
+  };
+  const [questions, setQuestions] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      var sort_by = "recent";
+      if(tabs[1].current) sort_by = "view";
+      else if(tabs[2].current) sort_by = "answer";
+      const res = await fetch("/api/question/get_question_all", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          search: search,
+          sortby: sort_by,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setQuestions(data);
+      }
+    };
+    fetchData();
+  }, [search,tabs]);
+  const [trquestions, setTrQuestions] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const res = await fetch("/api/question/get_question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          search: "",
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setTrQuestions(data);
       }
     };
     fetchData();
@@ -316,6 +354,7 @@ export default function HomePage({search}) {
                       <a
                         key={tab.name}
                         href={tab.href}
+                        onClick={() => changeTab(tabIdx)}
                         aria-current={tab.current ? "page" : undefined}
                         className={classNames(
                           tab.current
@@ -725,7 +764,7 @@ export default function HomePage({search}) {
                           role="list"
                           className="-my-4 divide-y divide-gray-200"
                         >
-                          {questions && questions.slice(0,5).map((post) => (
+                          {trquestions && trquestions.slice(0,5).map((post) => (
                             <li key={post.id} className="flex space-x-3 py-4">
                               <div className="flex-shrink-0">
                                 <Image
