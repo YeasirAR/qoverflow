@@ -252,7 +252,7 @@ export default function AskQuestion() {
       },
       body: JSON.stringify({
         title: title,
-        body: dataQsn+"<br></br>"+dataExp,
+        body: dataQsn+dataExp,
         post_id: getRandomInt(1, 100000000),
         author: user.name,
         authorImageUrl: user.imageUrl,

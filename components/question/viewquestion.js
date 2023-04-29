@@ -285,6 +285,7 @@ export default function ViewQuestion({question_id}) {
       }),
     });
     const resp = await res.json();
+    window.location.reload();
     // if(resp.status === 200){
     //   alert(resp.message);
     // }
@@ -697,11 +698,6 @@ export default function ViewQuestion({question_id}) {
                                 href="#"
                                 className="group inline-flex items-start space-x-2 text-sm text-gray-500 hover:text-gray-900"
                               >
-                                <QuestionMarkCircleIcon
-                                  className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                  aria-hidden="true"
-                                />
-                                <span>Some HTML is okay.</span>
                               </a>
                               <button
                                 type="submit"
@@ -910,10 +906,11 @@ export default function ViewQuestion({question_id}) {
                       <Button variant="outlined" size="medium" className="mt-2" onClick={addAnswer}>
                         Post Your Answer
                       </Button>
+      
                       }
                     </div>
                     
-                    <div className="bg-white px-4 shadow  sm:p-6">
+                    <div className="bg-white px-4 shadow">
                     {!isLoggedIn && <div><h1 className="mb-2 text-xl font-medium text-gray-700">
                         {" "}
                         You need to login to post your answer

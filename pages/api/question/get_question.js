@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       ]
     });
     if (questions) {
-      res.status(200).json(questions);
+      res.status(200).json(questions.reverse());
     } else {
       res.status(409).json({ message: "Something went wrong"});
     }

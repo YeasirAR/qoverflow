@@ -454,10 +454,10 @@ export default function HomePage({search}) {
                           </Link>
                         </div>
                         <Link href={"/question/view/"+question.post_id}>
-                        <div
+                        {/* <div
                           className="mt-2 space-y-4 text-sm text-gray-700 text-justify"
-                          dangerouslySetInnerHTML={{ __html: question.body }}
-                        />
+                          dangerouslySetInnerHTML={{ __html: question.body.slice(100) }}
+                        /> */}
                         </Link>
                         
 
