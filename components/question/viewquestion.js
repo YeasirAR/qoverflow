@@ -294,6 +294,20 @@ export default function ViewQuestion({question_id}) {
       const data = await res.json();
     };
     fetchData();
+    const fetchData2 = async () => {
+      const res = await fetch("/api/user/update_vote_view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.username,
+          todo: "answer",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData2();
     window.location.reload();
   };
   const [comments, setComments] = useState(null);
@@ -403,7 +417,7 @@ export default function ViewQuestion({question_id}) {
     fetchData();
   }, [question_id]);
   
-  const increaseVote =() => {
+  const increaseVote =(username) => {
     const fetchData = async () => {
       const res = await fetch("/api/question/update_question", {
         method: "POST",
@@ -418,9 +432,23 @@ export default function ViewQuestion({question_id}) {
       const data = await res.json();
     };
     fetchData();
+    const fetchData2 = async () => {
+      const res = await fetch("/api/user/update_vote_view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          todo: "upvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData2();
     window.location.reload();
   };
-  const decreaseVote =() => {
+  const decreaseVote =(username) => {
     const fetchData = async () => {
       const res = await fetch("/api/question/update_question", {
         method: "POST",
@@ -435,9 +463,23 @@ export default function ViewQuestion({question_id}) {
       const data = await res.json();
     };
     fetchData();
+    const fetchData2 = async () => {
+      const res = await fetch("/api/user/update_vote_view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          todo: "downvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData2();
     window.location.reload();
   };
-  const increaseVoteAnswer =() => {
+  const increaseVoteAnswer =(username) => {
     const fetchData = async () => {
       const res = await fetch("/api/answer/update_answer", {
         method: "POST",
@@ -452,9 +494,23 @@ export default function ViewQuestion({question_id}) {
       const data = await res.json();
     };
     fetchData();
+    const fetchData2 = async () => {
+      const res = await fetch("/api/user/update_vote_view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          todo: "upvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData2();
     window.location.reload();
   };
-  const decreaseVoteAnswer =() => {
+  const decreaseVoteAnswer =(username) => {
     const fetchData = async () => {
       const res = await fetch("/api/answer/update_answer", {
         method: "POST",
@@ -469,6 +525,20 @@ export default function ViewQuestion({question_id}) {
       const data = await res.json();
     };
     fetchData();
+    const fetchData2 = async () => {
+      const res = await fetch("/api/user/update_vote_view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          todo: "downvote",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData2();
     window.location.reload();
   };
 
@@ -691,7 +761,7 @@ export default function ViewQuestion({question_id}) {
                               <Upvote
                                 className="h-9 w-9 mt-8 hover:text-gray-500"
                                 aria-hidden="true"
-                                onClick={increaseVote}
+                                onClick={() => increaseVote(question.authorUsername)}
                               />
                               <h1 className="font-medium text-lg text-gray-900 ml-3">
                                 {question.vote}
@@ -699,7 +769,7 @@ export default function ViewQuestion({question_id}) {
                               <Downvote
                                 className="h-9 w-9 hover:text-gray-500"
                                 aria-hidden="true"
-                                onClick={decreaseVote}
+                                onClick={() => decreaseVote(question.authorUsername)}
                               />
                               {/* <SaveRoundedIcon
                                 className="h-6 w-6 hover:text-gray-500"
@@ -881,22 +951,22 @@ export default function ViewQuestion({question_id}) {
                               </div>
                               <div className="min-w-0 flex-1">
                                 <p className="text-sm font-medium text-gray-900">
-                                  <a
-                                    href={answer.authorUsername}
+                                  <Link
+                                    href={"/profile/"+answer.authorUsername}
                                     className="hover:underline"
                                   >
                                     {answer.author}
-                                  </a>
+                                  </Link>
                                 </p>
                                 <p className="text-sm text-gray-500">
-                                  <a
-                                    href={answer.authorUsername}
+                                  <Link
+                                    href="#"
                                     className="hover:underline"
                                   >
                                     <time dateTime={answer.date}>
                                       {getDate(answer.date)}
                                     </time>
-                                  </a>
+                                  </Link>
                                 </p>
                               </div>
                               <div className="flex flex-shrink-0 self-center">
@@ -995,7 +1065,7 @@ export default function ViewQuestion({question_id}) {
                                 <Upvote
                                   className="h-9 w-9 mt-2 hover:text-gray-500"
                                   aria-hidden="true"
-                                  onClick={increaseVoteAnswer}
+                                  onClick={() => increaseVoteAnswer(answer.authorUsername)}
                                 />
                                 <h1 className="font-medium text-lg text-gray-900 ml-3">
                                   {answer.vote}
@@ -1003,7 +1073,7 @@ export default function ViewQuestion({question_id}) {
                                 <Downvote
                                   className="h-9 w-9 hover:text-gray-500"
                                   aria-hidden="true"
-                                  onClick={decreaseVoteAnswer}
+                                  onClick={() => decreaseVoteAnswer(answer.authorUsername)}
                                 />
                                 {/* <SaveRoundedIcon
                                 className="h-6 w-6 hover:text-gray-500"

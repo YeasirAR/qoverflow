@@ -25,7 +25,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
 const ProfileInfo = () => {
   const tabs = [
     { name: "New", href: "#", current: true },
@@ -94,53 +93,70 @@ const ProfileInfo = () => {
     return classes.filter(Boolean).join(" ");
   }
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({});  
+  const [user, setUser] = useState({});
+
   useEffect(() => {
     const usr = localStorage.getItem("loggedInUser");
     if (usr) {
       setIsLoggedIn(true);
       setUser(JSON.parse(usr));
-    }
-    else {
+    } else {
       setIsLoggedIn(false);
     }
+    const tempFunc = async () => {
+      const res = await fetch("/api/user/find", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.username,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.status === 200) {
+        localStorage.setItem("loggedInUser", JSON.stringify(data));
+      }
+    };
+    tempFunc();
   }, []);
   return (
     <div>
       <div className="flex p-4">
-      <div>
-        <h1 className="text-2xl mb-2">Stats</h1>
-        <div className="border rounded px-4 py-2 mt-4">
-          <div className="flex space-x-10">
-            <div>
-              <h1 className="text-center font-medium">{user.reputation}</h1>
-              <h3>reputation</h3>
+        <div>
+          <h1 className="text-2xl mb-2">Stats</h1>
+          <div className="border rounded px-4 py-2 mt-4">
+            <div className="flex space-x-10">
+              <div>
+                <h1 className="text-center font-medium">{user.reputation}</h1>
+                <h3>reputation</h3>
+              </div>
+              <div>
+                <h1 className="text-center font-medium">{user.views}</h1>
+                <h3>views</h3>
+              </div>
             </div>
-            <div>
-              <h1 className="text-center font-medium">{user.views }</h1>
-              <h3>views</h3>
-            </div>
-          </div>
-          <div className="flex space-x-10 mt-4">
-            <div>
-              <h1 className="text-center font-medium">{user.questionCount}</h1>
-              <h3>questions</h3>
-            </div>
-            <div>
-              <h1 className="text-center font-medium">{user.answerCount}</h1>
-              <h3>answers</h3>
+            <div className="flex space-x-10 mt-4">
+              <div>
+                <h1 className="text-center font-medium">
+                  {user.questionCount}
+                </h1>
+                <h3>questions</h3>
+              </div>
+              <div>
+                <h1 className="text-center font-medium">{user.answerCount}</h1>
+                <h3>answers</h3>
+              </div>
             </div>
           </div>
         </div>
+        <div className="ml-10">
+          <h1 className="text-2xl mb-2">About</h1>
+          <h3>{user.bio}</h3>
+        </div>
       </div>
-      <div className="ml-10">
-        <h1 className="text-2xl mb-2">About</h1>
-        <h3>
-          {user.bio}
-        </h3>
-      </div>
-    </div>
-    <div className=" bg-white px-4 py-5 sm:px-6">
+      <div className=" bg-white px-4 py-5 sm:px-6">
         <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
           <div className="ml-4 mt-2">
             <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -192,9 +208,7 @@ const ProfileInfo = () => {
                   <h1 className="col-span-1 rounded bg-blue-400 text-white text-center">
                     {question.likes}
                   </h1>
-                  <h1 className="ml-2 col-span-10">
-                    {question.title}
-                  </h1>
+                  <h1 className="ml-2 col-span-10">{question.title}</h1>
                   <h1 className="col-span-1">
                     {question.datetime.slice(0, 10)}
                   </h1>
@@ -229,14 +243,13 @@ export default function ViewProfile() {
     setTabs(newTabs);
   };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({});  
+  const [user, setUser] = useState({});
   useEffect(() => {
     const usr = localStorage.getItem("loggedInUser");
     if (usr) {
       setIsLoggedIn(true);
       setUser(JSON.parse(usr));
-    }
-    else {
+    } else {
       setIsLoggedIn(false);
     }
   }, []);
@@ -245,11 +258,13 @@ export default function ViewProfile() {
     const endDate = new Date();
     const diffTime = Math.abs(endDate - startDate);
     const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
-    const diffMonths = Math.floor((diffTime % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-  
+    const diffMonths = Math.floor(
+      (diffTime % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30)
+    );
+
     return `Member for ${diffYears} years, ${diffMonths} months`;
   }
-  
+
   return (
     <div>
       <div className="flex border-b justify-between ">
@@ -274,7 +289,7 @@ export default function ViewProfile() {
 
           <div className="flex space-x-2 mt-2 items-center">
             <Link
-              href={user.facebook?user.facebook:""}
+              href={user.facebook ? user.facebook : ""}
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -292,7 +307,7 @@ export default function ViewProfile() {
               <span className="sr-only">Facebook page</span>
             </Link>
             <Link
-              href={user.twitter?user.twitter:""}
+              href={user.twitter ? user.twitter : ""}
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -306,7 +321,7 @@ export default function ViewProfile() {
               <span className="sr-only">Twitter page</span>
             </Link>
             <Link
-              href={user.github?user.github:""}
+              href={user.github ? user.github : ""}
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -327,24 +342,29 @@ export default function ViewProfile() {
               href="#"
               className="pb-1 text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
-              <LocationOnIcon fontSize="small" />{user.location}
+              <LocationOnIcon fontSize="small" />
+              {user.location}
             </Link>
           </div>
         </div>
-        {isLoggedIn?<div className="p-4 flex-shrink-0 ml-auto">
-          <button
-            type="button"
-            onClick={() => handleTabClick(3)}
-            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Edit Profile
-          </button>
-        </div>:<div className="p-4 flex-shrink-0 ml-auto"></div>}
+        {isLoggedIn ? (
+          <div className="p-4 flex-shrink-0 ml-auto">
+            <button
+              type="button"
+              onClick={() => handleTabClick(3)}
+              className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Edit Profile
+            </button>
+          </div>
+        ) : (
+          <div className="p-4 flex-shrink-0 ml-auto"></div>
+        )}
       </div>
       <div className="mt-3 pl-4">
         <div className="sm:block">
           <nav className="flex space-x-4" aria-label="Tabs">
-            {tabs.map((tab,index) => (
+            {tabs.map((tab, index) => (
               <button
                 key={tab.name}
                 // href={tab.href}

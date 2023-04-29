@@ -114,6 +114,20 @@ const ProfileInfo = ({profileUrl}) => {
       }
     };
     fetchData();
+    const fetchData2 = async () => {
+      const res = await fetch("/api/user/update_vote_view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: profileUrl,
+          todo: "view",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData2();
     console.log(profileUrl);
   }, [profileUrl]);
   return (

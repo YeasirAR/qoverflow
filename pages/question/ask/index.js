@@ -269,6 +269,20 @@ export default function AskQuestion() {
     else{
       alert(resp.message);
     }
+    const fetchData2 = async () => {
+      const res = await fetch("/api/user/update_vote_view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.username,
+          todo: "question",
+        }),
+      });
+      const data = await res.json();
+    };
+    fetchData2();
   };
   return (
     <>
