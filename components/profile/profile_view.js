@@ -63,7 +63,7 @@ const ProfileInfo = () => {
       }
     };
     tempFunc();
-  }, []);
+  }, [user.username]);
   const [trquestions, setTrQuestions] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
