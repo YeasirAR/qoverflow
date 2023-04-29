@@ -1050,9 +1050,9 @@ export default function ViewQuestion({question_id}) {
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
-                                <p className="text-sm text-gray-800">
+                                <Link href={"/question/view/"+post.post_id}><p className="text-sm text-gray-800">
                                   {post.title}
-                                </p>
+                                </p></Link>
                                 {/* <div className="mt-2 flex">
                                   <span className="inline-flex items-center text-sm">
                                     <button
