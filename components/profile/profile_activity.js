@@ -59,6 +59,27 @@ export default function ProfileActivity({profileUrl}) {
     };
     fetchData();
   }, [user]);
+  const [transwers, setTrAnswers] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const res = await fetch("/api/question/get_answer_user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.username,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setTrAnswers(data);
+      }
+    };
+    fetchData();
+  }, [user]);
   function getDate(datetime) {
     const date = new Date(parseInt(datetime));
     const options = {
@@ -177,7 +198,7 @@ export default function ProfileActivity({profileUrl}) {
         </div>
         <div>
           <ul role="list" className="space-y-2 mt-2">
-          {trquestions && trquestions.slice(0,5).map((question) => (
+          {transwers && transwers.slice(0,5).map((question) => (
               <li
                 key={question._id}
                 className="bg-white px-4 py-2 shadow sm:rounded-lg sm:p-2"
