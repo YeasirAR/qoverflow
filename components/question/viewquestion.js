@@ -339,7 +339,49 @@ export default function ViewQuestion({question_id}) {
     // }
   };
 
-  
+  const [topUser,setTopUser] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      var sort_by = "reputation";
+      const res = await fetch("/api/user/findall", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          search: search,
+          sortby: sort_by,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setTopUser(data);
+      }
+    };
+    fetchData();
+  }, []);
+  const [questions, setQuestions] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/question/get_question", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          search: "",
+          // sortby: sort_by,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setQuestions(data);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <div className="min-h-full">
@@ -888,7 +930,7 @@ export default function ViewQuestion({question_id}) {
                         </article>
                       </li>
                     ))}
-                    <div className="bg-white px-4 shadow  sm:p-6">
+                    <div className="bg-white px-4  sm:p-6">
                     <h1 className="mb-2 text-2xl font-medium text-gray-700">
                         {" "}
                         Add Your Answer Here
@@ -932,33 +974,32 @@ export default function ViewQuestion({question_id}) {
                         id="who-to-follow-heading"
                         className="text-base font-medium text-gray-900"
                       >
-                        Top Contributors
+                        Top Users
                       </h2>
                       <div className="mt-6 flow-root">
                         <ul
                           role="list"
                           className="-my-4 divide-y divide-gray-200"
                         >
-                          {whoToFollow.map((user) => (
+                          {topUser && topUser.slice(0,4).map((usr) => (
                             <li
-                              key={user.handle}
+                              key={usr.username}
                               className="flex items-center space-x-3 py-4"
                             >
                               <div className="flex-shrink-0">
                                 <Image
                                   className="h-8 w-8 rounded-full"
-                                  src={user.imageUrl}
-                                  height={1000}
-                                  width={1000}
+                                  src={usr.imageUrl}
+                                  height={1000} width={1000}
                                   alt=""
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
                                 <p className="text-sm font-medium text-gray-900">
-                                  <a href={user.href}>{user.name}</a>
+                                  <a href={"/profile/"+usr.username}>{usr.name}</a>
                                 </p>
                                 <p className="text-sm text-gray-500">
-                                  <a href={user.href}>{"@" + user.handle}</a>
+                                  <a href={"/profile/"+usr.username}>{"@" + usr.username}</a>
                                 </p>
                               </div>
                               <div className="flex-shrink-0">
@@ -966,11 +1007,7 @@ export default function ViewQuestion({question_id}) {
                                   type="button"
                                   className="inline-flex items-center rounded-full bg-rose-50 px-3 py-0.5 text-sm font-medium text-rose-700 hover:bg-rose-100"
                                 >
-                                  <PlusIcon
-                                    className="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
-                                    aria-hidden="true"
-                                  />
-                                  <span>Follow</span>
+                                  <Link href={"/profile/"+usr.username}><span>View</span></Link>
                                 </button>
                               </div>
                             </li>
@@ -979,7 +1016,7 @@ export default function ViewQuestion({question_id}) {
                       </div>
                       <div className="mt-6">
                         <a
-                          href="#"
+                          href="/users"
                           className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                         >
                           View all
@@ -1002,20 +1039,19 @@ export default function ViewQuestion({question_id}) {
                           role="list"
                           className="-my-4 divide-y divide-gray-200"
                         >
-                          {trendingPosts.map((post) => (
+                          {questions && questions.slice(0,5).map((post) => (
                             <li key={post.id} className="flex space-x-3 py-4">
                               <div className="flex-shrink-0">
                                 <Image
                                   className="h-8 w-8 rounded-full"
-                                  src={post.user.imageUrl}
-                                  alt={post.user.name}
-                                  height={1000}
-                                  width={1000}
+                                  src={post.authorImageUrl}
+                                  alt={post.author}
+                                  height={1000} width={1000}
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
                                 <p className="text-sm text-gray-800">
-                                  {post.body}
+                                  {post.title}
                                 </p>
                                 {/* <div className="mt-2 flex">
                                   <span className="inline-flex items-center text-sm">
@@ -1035,7 +1071,7 @@ export default function ViewQuestion({question_id}) {
                       </div>
                       <div className="mt-6">
                         <a
-                          href="#"
+                          href="/"
                           className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                         >
                           View all
