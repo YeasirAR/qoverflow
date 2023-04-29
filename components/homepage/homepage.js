@@ -173,7 +173,7 @@ export default function HomePage({search}) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          search: search,
+          search: "",
           sortby: sort_by,
         }),
       });
@@ -740,12 +740,12 @@ export default function HomePage({search}) {
                         </ul>
                       </div>
                       <div className="mt-6">
-                        <a
+                        <Link
                           href="/users"
                           className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                         >
                           View all
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -795,12 +795,12 @@ export default function HomePage({search}) {
                         </ul>
                       </div>
                       <div className="mt-6">
-                        <a
+                        <Link
                           href="/"
                           className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                         >
                           View all
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
