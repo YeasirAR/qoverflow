@@ -1116,7 +1116,7 @@ export default function ViewQuestion({question_id}) {
                       }
                     </div>
                     
-                    <div className="bg-white px-4 shadow">
+                    <div className="bg-white px-4 mb-2 shadow">
                     {!isLoggedIn && <div><h1 className="mb-2 text-xl font-medium text-gray-700">
                         {" "}
                         You need to login to post your answer
