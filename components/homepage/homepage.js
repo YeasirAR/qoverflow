@@ -64,9 +64,9 @@ const communities = [
 ];
 
 const quicklinks = [
-  { name: "Install React", href: "#" },
-  { name: "Install Node", href: "#" },
-  { name: "Setup Project", href: "#" },
+  { name: "Facebook", href: "#" },
+  { name: "Github", href: "#" },
+  { name: "Twitter", href: "#" },
 ];
 // const tabs = [
 //   { name: "Recent", href: "#", current: true },
@@ -286,7 +286,7 @@ export default function HomePage({search}) {
                     className="px-3 text-sm font-medium text-gray-500"
                     id="communities-headline"
                   >
-                    Popular Categories
+                    Popular Tags
                   </p>
                   <div
                     className="mt-3 space-y-2"
@@ -755,7 +755,7 @@ export default function HomePage({search}) {
                         id="trending-heading"
                         className="text-base font-medium text-gray-900"
                       >
-                        Trending
+                        Recent Questions
                       </h2>
                       <div className="mt-6 flow-root">
                         <ul

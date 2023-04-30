@@ -184,7 +184,8 @@ const ProfileInfo = () => {
                   <h1 className="col-span-1 rounded bg-blue-400 text-white text-center">
                     {question.vote}
                   </h1>
-                  <h1 className="ml-2 col-span-9">{question.title}</h1>
+                  <Link className="ml-2 col-span-9" href={"/question/view/"+question.post_id} >
+                  <h1 >{question.title}</h1></Link>
                   <h1 className="ml-4 col-span-2">
                     {getDate(question.date)}
                   </h1>

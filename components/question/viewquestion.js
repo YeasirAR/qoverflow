@@ -65,9 +65,9 @@ const communities = [
 ];
 
 const quicklinks = [
-  { name: "Install React", href: "#" },
-  { name: "Install Node", href: "#" },
-  { name: "Setup Project", href: "#" },
+  { name: "Facebook", href: "#" },
+  { name: "Github", href: "#" },
+  { name: "Twitter", href: "#" },
 ];
 
 // const answers = [
@@ -843,7 +843,7 @@ export default function ViewQuestion({question_id}) {
                                       href="#"
                                       className="font-medium text-gray-900"
                                     >
-                                      {comment.authorName}
+                                      {comment.author}
                                     </a>
                                   </div>
                                   <div className="mt-1 text-sm text-gray-700">
@@ -1196,7 +1196,7 @@ export default function ViewQuestion({question_id}) {
                         id="trending-heading"
                         className="text-base font-medium text-gray-900"
                       >
-                        Trending
+                        Recent Questions
                       </h2>
                       <div className="mt-6 flow-root">
                         <ul

@@ -38,16 +38,9 @@ const user = {
   imageUrl: "/images/yeasir.jpg",
 };
 const navigation = [
-  { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "Questions", href: "#", icon: FireIcon, current: false },
+  { name: "Home", href: "/", icon: HomeIcon, current: false },
   { name: "Tags", href: "/tags", icon: ArrowTrendingUpIcon, current: false },
-  { name: "Users", href: "/users", icon: UserGroupIcon, current: false },
-  {
-    name: "About",
-    href: "/about",
-    icon: InformationCircleIcon,
-    current: false,
-  },
+  { name: "Users", href: "/users", icon: UserGroupIcon, current: true },
   {
     name: "Contact",
     href: "/contact",
@@ -70,9 +63,9 @@ const communities = [
 ];
 
 const quicklinks = [
-  { name: "Install React", href: "#" },
-  { name: "Install Node", href: "#" },
-  { name: "Setup Project", href: "#" },
+  { name: "Facebook", href: "#" },
+  { name: "Github", href: "#" },
+  { name: "Twitter", href: "#" },
 ];
 const tabs = [
   { name: "Recent", href: "#", current: true },

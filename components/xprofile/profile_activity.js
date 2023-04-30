@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function ProfileActivity({ profileUrl}) {
@@ -114,8 +115,7 @@ export default function ProfileActivity({ profileUrl}) {
   const [transwers, setTrAnswers] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-
-      const res = await fetch("/api/question/get_answer_user", {
+      const res = await fetch("/api/answer/get_answer_user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -198,9 +198,10 @@ export default function ProfileActivity({ profileUrl}) {
                   <h1 className="col-span-1 rounded bg-blue-400 text-white text-center">
                     {question.vote}
                   </h1>
-                  <h1 className="ml-2 col-span-11">
+                  <Link className="ml-2 col-span-11" href={"/question/view/"+question.post_id} >
+                  <h1 className="">
                     {question.title.slice(0, 60)}
-                  </h1>
+                  </h1></Link>
                 </div>
               </li>
             ))}
@@ -259,9 +260,10 @@ export default function ProfileActivity({ profileUrl}) {
                   <h1 className="col-span-1 rounded bg-blue-400 text-white text-center">
                     {question.vote}
                   </h1>
-                  <h1 className="ml-2 col-span-11">
-                    {question.title.slice(0, 60)}
-                  </h1>
+                  <Link className="ml-2 col-span-11" href={"/question/view/"+question.post_id} >
+                  <h1>
+                    {question.body.slice(4, 60)}
+                  </h1></Link>
                 </div>
               </li>
             ))}

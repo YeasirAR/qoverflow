@@ -151,6 +151,27 @@ const ProfileInfo = ({profileUrl}) => {
     };
     fetchData();
   }, [profileUrl]);
+  const [transwers, setTrAnswers] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const res = await fetch("/api/answer/get_answer_user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: profileUrl,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if(res.status === 200) {
+        setTrAnswers(data);
+      }
+    };
+    fetchData();
+  }, [profileUrl]);
   function getDate(datetime) {
     const date = new Date(parseInt(datetime));
     const options = {
@@ -250,7 +271,8 @@ const ProfileInfo = ({profileUrl}) => {
                   <h1 className="col-span-1 rounded bg-blue-400 text-white text-center">
                     {question.vote}
                   </h1>
-                  <h1 className="ml-2 col-span-9">{question.title}</h1>
+                  <Link className="ml-2 col-span-9" href={"/question/view/"+question.post_id} >
+                  <h1 >{question.title}</h1></Link>
                   <h1 className="ml-4 col-span-2">
                     {getDate(question.date)}
                   </h1>
