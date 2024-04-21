@@ -30,10 +30,10 @@ export default async function handler(req, res) {
         await newUser.save();
         
         res.status(200).json("Account created successfully");
-        verifyMail(email,username,userData._id)
+        verifyMail(newUser.email,newUser.username,newUser._id)
         const verifyMail=async(email,username,userid)=>{
           try {
-            let transporter = nodemailer.createTransport({
+            const transporter = nodemailer.createTransport({
               service:"gmail",
               auth:{
                 user:"eyamin.aman@gmail.com",
@@ -44,9 +44,9 @@ export default async function handler(req, res) {
             from: 'eyamin.aman@gmail.com', // sender address
             to: email, // list of receivers
             subject: "Verification of Qoverflow", // Subject line
-            html: "<b>Hi, Please click here to <a href='http://localhost:3002'>verify</a></b>", 
+            html: "<b>Hi, Please click here to <a href='http://localhost:3000'>verify</a></b>", 
           }).then(
-             await Users.updateOne({_id:userid},{$set:{verified:true}})
+             await Users.updateOne({_id:userid},{$set:{verified:0}})
           )
         
           console.log("Message sent: ", info.messageId);

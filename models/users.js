@@ -17,7 +17,7 @@ const usersSchema = new mongoose.Schema({
   views : { type: Number ,default:0 },
   questionCount : { type: Number ,default:0 },
   answerCount : { type: Number ,default:0 },
-  verified:{type:Boolean,default:false}
+  verified:{type:number,default:0}
 });
 
 const Users = mongoose.models.users || mongoose.model("users", usersSchema);
