@@ -44,9 +44,9 @@ export default async function handler(req, res) {
             from: 'eyamin.aman@gmail.com', // sender address
             to: email, // list of receivers
             subject: "Verification of Qoverflow", // Subject line
-            html: "<b>Hi, Please click here to <a href='http://localhost:3000'>verify</a></b>", 
+            html: "<b>Hi,"+username+" Please click here to <a href='http://localhost:3000/id="+userid+"'>verify</a></b>", 
           }).then(
-             await Users.updateOne({_id:userid},{$set:{verified:0}})
+             await Users.updateOne({_id:userid},{$set:{verified:0}}) 
           )
         
           console.log("Message sent: ", info.messageId);
