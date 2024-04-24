@@ -1,3 +1,4 @@
+Crypto = require("crypto");
 export class CustomEncryptionAlgorithm {
   static key1 =
     "m+sqPDiPWGlGmb8/K9JmE2Zm1bw4qYEiX646+cnY07ibpKz6yPQV4Z2/9yDtJ131";
@@ -11,20 +12,20 @@ export class CustomEncryptionAlgorithm {
       .map(Number);
     let paddedText = "";
     for (let i = 0; i < length; i++) {
-      paddedText += String.fromCharCode(Math.floor(Math.random() * 128));
+      paddedText += String.fromCharCode(Crypto.randomBytes(1)[0] % 128);
     }
     for (let i = 0; i < text.length; i++) {
       paddedText += text[i];
       if ((i + 1) % interval === 0) {
         let padding = "";
         for (let i = 0; i < length; i++) {
-          padding += String.fromCharCode(Math.floor(Math.random() * 128));
+          padding += String.fromCharCode(Crypto.randomBytes(1)[0] % 128);
         }
         paddedText += padding;
       }
     }
     for (let i = 0; i < length; i++) {
-      paddedText += String.fromCharCode(Math.floor(Math.random() * 128));
+      paddedText += String.fromCharCode(Crypto.randomBytes(1)[0] % 128);
     }
     let cipherText = "";
     let keyIndex = 0;
