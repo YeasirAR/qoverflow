@@ -10,6 +10,9 @@ export class CustomEncryptionAlgorithm {
       .split("_")
       .map(Number);
     let paddedText = "";
+    for (let i = 0; i < length; i++) {
+      paddedText += String.fromCharCode(Math.floor(Math.random() * 128));
+    }
     for (let i = 0; i < text.length; i++) {
       paddedText += text[i];
       if ((i + 1) % interval === 0) {
@@ -20,9 +23,12 @@ export class CustomEncryptionAlgorithm {
         paddedText += padding;
       }
     }
+    for (let i = 0; i < length; i++) {
+      paddedText += String.fromCharCode(Math.floor(Math.random() * 128));
+    }
     let cipherText = "";
     let keyIndex = 0;
-
+    
     for (let i = 0; i < paddedText.length; i++) {
       const charCode = paddedText.charCodeAt(i);
       const first_shift = CustomEncryptionAlgorithm.key1.charCodeAt(
@@ -58,7 +64,7 @@ export class CustomEncryptionAlgorithm {
       .split("_")
       .map(Number);
     let unpaddedText = "";
-    for (let i = 0, j = 0; i < plainText.length; i++) {
+    for (let i = length, j = 0; i < plainText.length-length; i++) {
       unpaddedText += plainText[i];
       j++;
       if ((j) % interval === 0) {
