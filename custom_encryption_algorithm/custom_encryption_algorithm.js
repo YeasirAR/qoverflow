@@ -1,76 +1,89 @@
 Crypto = require("crypto");
 export class CustomEncryptionAlgorithm {
   static key1 =
-    "m+sqPDiPWGlGmb8/K9JmE2Zm1bw4qYEiX646+cnY07ibpKz6yPQV4Z2/9yDtJ131";
+    "*OTC#Y#1kTuU5=_O+ilm3-jzd7G_qb5a|2z1!#oP4?3y$jEYn!F8A0+uJe^iY*L_PN1?8W!dwXGbetk$z#Hvx-M|Ky?NV9xiVe6|u9JN9oI-sbt9wswS*-xPOKI$specJ$FfK$l1!YyISaoPAaNpe$WXc&WHt!V6$01h+Cidk=SgYzj2o&mw=OHnj#%X9c95q+TUp?p@t0^!MeEEkW&YEwM?IXfsZCVk&4dhMy=febmRlIcYp^+0q2=TYm";
   static key2 =
-    "6ZbtKCuG7q58beeodlJH5BYRNut35UMfj3lG8W9kn/UEKZPLEAecdTV2jPGXBJTq";
-  static key3 = "7_10";
+    "6b@+YUQwOzxyIZUxmkjZnwv&UGqNI$tJd3FP7PQLsio+dM!^wI_v3Mnz5ZE@YH+g99gj3gFRS+z-#RZ?JQQX$?4$SL@nY!GZ!Tl=4Y@t?S3VAzhUogRTADDOd7Cl6Gi%";
+  static key3 = "6+4_2+7_3+3_1+5";
 
   encrypt(text) {
-    const [interval, length] = CustomEncryptionAlgorithm.key3
-      .split("_")
-      .map(Number);
+    const startPadding = Number(CustomEncryptionAlgorithm.key3[0]);
+    const endPadding = Number(CustomEncryptionAlgorithm.key3[CustomEncryptionAlgorithm.key3.length - 1]);
+    const key3_interval = [Number(CustomEncryptionAlgorithm.key3[2]),Number(CustomEncryptionAlgorithm.key3[6]),
+                            Number(CustomEncryptionAlgorithm.key3[10]),
+                          ]
+    const key3_padding = [Number(CustomEncryptionAlgorithm.key3[4]),Number(CustomEncryptionAlgorithm.key3[8]),
+                            Number(CustomEncryptionAlgorithm.key3[12]),
+                          ]
+    const key3_len = 3
     let paddedText = "";
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < startPadding; i++) {
       paddedText += String.fromCharCode(Crypto.randomBytes(1)[0] % 128);
     }
-    for (let i = 0; i < text.length; i++) {
-      paddedText += text[i];
-      if ((i + 1) % interval === 0) {
-        let padding = "";
-        for (let i = 0; i < length; i++) {
-          padding += String.fromCharCode(Crypto.randomBytes(1)[0] % 128);
+    let curr_i = 0
+    let curr_pad = 0
+    for(let i=0;i<text.length;i++){
+      if(curr_i== key3_interval[curr_pad%key3_len]){
+        for(let j=0;j<key3_padding[curr_pad%key3_len];j++){
+          paddedText += String.fromCharCode(Crypto.randomBytes(1)[0] % 128);
         }
-        paddedText += padding;
+        curr_pad += 1
+        curr_i = 0
       }
+      paddedText += text[i];
+      curr_i += 1
     }
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < endPadding; i++) {
       paddedText += String.fromCharCode(Crypto.randomBytes(1)[0] % 128);
     }
+    
     let cipherText = "";
-    let keyIndex = 0;
     
     for (let i = 0; i < paddedText.length; i++) {
       const charCode = paddedText.charCodeAt(i);
       const first_shift = CustomEncryptionAlgorithm.key1.charCodeAt(
-        keyIndex % CustomEncryptionAlgorithm.key1.length
+        i % CustomEncryptionAlgorithm.key1.length
       );
-      const second_shift = CustomEncryptionAlgorithm.key2.charCodeAt(
-        first_shift % CustomEncryptionAlgorithm.key2.length
-      );
+      const second_shift = CustomEncryptionAlgorithm.key2.charCodeAt(first_shift);
       const newCode = (charCode + second_shift) % 128;
       cipherText += String.fromCharCode(newCode);
-      keyIndex++;
     }
     return [paddedText,cipherText];
   }
 
   decrypt(text) {
     let plainText = "";
-    let keyIndex = 0;
 
     for (let i = 0; i < text.length; i++) {
       const charCode = text.charCodeAt(i);
       const first_shift = CustomEncryptionAlgorithm.key1.charCodeAt(
-        keyIndex % CustomEncryptionAlgorithm.key1.length
+        i % CustomEncryptionAlgorithm.key1.length
       );
-      const second_shift = CustomEncryptionAlgorithm.key2.charCodeAt(
-        first_shift % CustomEncryptionAlgorithm.key2.length
-      );
+      const second_shift = CustomEncryptionAlgorithm.key2.charCodeAt(first_shift);
       const newCode = (charCode - second_shift + 128) % 128;
       plainText += String.fromCharCode(newCode);
-      keyIndex++;
     }
-    let [interval, length] = CustomEncryptionAlgorithm.key3
-      .split("_")
-      .map(Number);
+    const startPadding = Number(CustomEncryptionAlgorithm.key3[0]);
+    const endPadding = Number(CustomEncryptionAlgorithm.key3[CustomEncryptionAlgorithm.key3.length - 1]);
+    const key3_interval = [Number(CustomEncryptionAlgorithm.key3[2]),Number(CustomEncryptionAlgorithm.key3[6]),
+                            Number(CustomEncryptionAlgorithm.key3[10]),
+                          ]
+    const key3_padding = [Number(CustomEncryptionAlgorithm.key3[4]),Number(CustomEncryptionAlgorithm.key3[8]),
+                            Number(CustomEncryptionAlgorithm.key3[12]),
+                          ]
+    const key3_len = 3
+
     let unpaddedText = "";
-    for (let i = length, j = 0; i < plainText.length-length; i++) {
-      unpaddedText += plainText[i];
-      j++;
-      if ((j) % interval === 0) {
-        i += length;
+    let curr_i = 0
+    let curr_pad = 0
+    for(let i=startPadding;i<plainText.length-endPadding;i++){
+      if(curr_i== key3_interval[curr_pad%key3_len]){
+        i += key3_padding[curr_pad%key3_len]
+        curr_pad += 1
+        curr_i = 0
       }
+      unpaddedText += plainText[i];
+      curr_i += 1
     }
     return [unpaddedText,plainText];
   }

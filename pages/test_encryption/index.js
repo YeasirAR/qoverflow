@@ -13,7 +13,7 @@ const Func = () => {
         const ENCR = new CustomEncryptionAlgorithm();
         const encrypt = ENCR.encrypt;
         const decrypt = ENCR.decrypt;
-        const text = "#$&*$@ This is a Secret message!##@$@)("        
+        const text = "This is a Secret message! It will be encrypted and decrypted using a custom algorithm."        
         const [paddedText,encryptedText] = encrypt(text);
         const [unpaddedText,decryptedText] = decrypt(encryptedText);
         setEncryptedText(encryptedText);
@@ -23,7 +23,7 @@ const Func = () => {
         setUnpaddedText(unpaddedText);
         console.log(encryptedText); 
         console.log(decryptedText); 
-          
+
     }, [])
     
   return <div>
