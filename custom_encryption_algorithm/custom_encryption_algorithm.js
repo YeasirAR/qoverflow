@@ -1,10 +1,14 @@
 Crypto = require("crypto");
 export class CustomEncryptionAlgorithm {
-  static key1 =
-    "*OTC#Y#1kTuU5=_O+ilm3-jzd7G_qb5a|2z1!#oP4?3y$jEYn!F8A0+uJe^iY*L_PN1?8W!dwXGbetk$z#Hvx-M|Ky?NV9xiVe6|u9JN9oI-sbt9wswS*-xPOKI$specJ$FfK$l1!YyISaoPAaNpe$WXc&WHt!V6$01h+Cidk=SgYzj2o&mw=OHnj#%X9c95q+TUp?p@t0^!MeEEkW&YEwM?IXfsZCVk&4dhMy=febmRlIcYp^+0q2=TYm";
-  static key2 =
-    "4.JKj:>bIPL-fC7*bw9,:3$_;m)5V+4&_ID6X%vylh0{y\fVjDwuYHfgF#YZ1r0LN*9@[3(@j;$,f5;o!rPgdX{1zf~oAi_NLh1V6tDD!m!3r|bnh£rMJ4v+?aHI6?Mmue&Napn382=2t[N%P|$£6b@+YUQwOzxyIZUxmkjZnwv&UGqNI$tJd3FP7PQLsio+dM!^wI_v3Mnz5ZE@YH+g99gj3gFRS+z-#RZ?JQQX$?4$SL@nY!GZ!Tl=4Y";
+  // static key1 =
+  //   "*OTC#Y#1kTuU5=_O+ilm3-jzd7G_qb5a|2z1!#oP4?3y$jEYn!F8A0+uJe^iY*L_PN1?8W!dwXGbetk$z#Hvx-M|Ky?NV9xiVe6|u9JN9oI-sbt9wswS*-xPOKI$specJ$FfK$l1!YyISaoPAaNpe$WXc&WHt!V6$01h+Cidk=SgYzj2o&mw=OHnj#%X9c95q+TUp?p@t0^!MeEEkW&YEwM?IXfsZCVk&4dhMy=febmRlIcYp^+0q2=TYm";
+  // static key2 =
+  //   "4.JKj:>bIPL-fC7*bw9,:3$_;m)5V+4&_ID6X%vylh0{y\fVjDwuYHfgF#YZ1r0LN*9@[3(@j;$,f5;o!rPgdX{1zf~oAi_NLh1V6tDD!m!3r|bnh£rMJ4v+?aHI6?Mmue&Napn382=2t[N%P|$£6b@+YUQwOzxyIZUxmkjZnwv&UGqNI$tJd3FP7PQLsio+dM!^wI_v3Mnz5ZE@YH+g99gj3gFRS+z-#RZ?JQQX$?4$SL@nY!GZ!Tl=4Y";
   static key3 = "9+4_2+7_3+3_1+8";
+  constructor(key1, key2) {
+    CustomEncryptionAlgorithm.key1 = key1;
+    CustomEncryptionAlgorithm.key2 = key2;
+  }
   encrypt(text) {
     
     const startPadding = Number(CustomEncryptionAlgorithm.key3[0]);
